@@ -1,5 +1,6 @@
 import Foundation
 import Testing
+
 @testable import GoogleAnalytics
 
 let client = GoogleAnalytics(
@@ -16,7 +17,7 @@ let client = GoogleAnalytics(
     name: "login",
     parameters: Parameters(method: "password")
   )
-  
+
   let payload = Payload(
     appInstanceId: UUID().uuidString.replacingOccurrences(of: "-", with: ""),
     events: [loginEvent]
@@ -25,7 +26,7 @@ let client = GoogleAnalytics(
 }
 
 struct Empty: Codable {
-  
+
 }
 @Test func validatePayload() async throws {
   struct Parameters: Encodable {
@@ -35,7 +36,7 @@ struct Empty: Codable {
     name: "login",
     parameters: Parameters(method: "password")
   )
-  
+
   let payload = Payload(
     appInstanceId: UUID().uuidString.replacingOccurrences(of: "-", with: ""),
     events: [loginEvent]

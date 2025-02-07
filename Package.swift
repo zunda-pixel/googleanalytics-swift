@@ -12,7 +12,7 @@ let package = Package(
     .library(
       name: "GoogleAnalytics",
       targets: ["GoogleAnalytics"]
-    ),
+    )
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-http-types.git", from: "1.3.1"),
