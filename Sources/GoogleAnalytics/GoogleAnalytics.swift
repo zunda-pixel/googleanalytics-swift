@@ -37,6 +37,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
   ) async throws {
     let payload = Payload(
       appInstanceId: appInstanceId,
+      timestampMicros: .now,
       userId: userId,
       events: events
     )
@@ -74,6 +75,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
   ) async throws -> [ValidationResponse.Message] {
     let payload = Payload(
       appInstanceId: appInstanceId,
+      timestampMicros: .now,
       userId: userId,
       events: events
     )
