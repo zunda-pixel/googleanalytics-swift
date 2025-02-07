@@ -6,7 +6,8 @@ import Testing
 let client = GoogleAnalytics(
   httpClient: .urlSession(.shared),
   appId: ProcessInfo.processInfo.environment["APP_ID"]!,
-  apiSecret: ProcessInfo.processInfo.environment["API_SECRET"]!
+  apiSecret: ProcessInfo.processInfo.environment["API_SECRET"]!,
+  appInstanceId: UUID().uuidString.replacingOccurrences(of: "-", with: "")
 )
 
 @Test func login() async throws {
@@ -18,28 +19,18 @@ let client = GoogleAnalytics(
     parameters: Parameters(method: "password")
   )
 
-  let payload = Payload(
-    appInstanceId: UUID().uuidString.replacingOccurrences(of: "-", with: ""),
-    events: [loginEvent]
-  )
-  try await client.log(for: payload)
+  try await client.log(for: loginEvent)
 }
 
-struct Empty: Codable {
-
-}
 @Test func validatePayload() async throws {
   struct Parameters: Encodable {
     var method: String
   }
   let loginEvent = Event(
-    name: "login",
-    parameters: Parameters(method: "password")
+    name: "_login",
+    parameters: ["1": "value1"]
   )
 
-  let payload = Payload(
-    appInstanceId: UUID().uuidString.replacingOccurrences(of: "-", with: ""),
-    events: [loginEvent]
-  )
-  try await client.validatePayload(for: payload)
+  let messages = try await client.validatePayload(for: [loginEvent])
+  print(messages)
 }
