@@ -11,13 +11,17 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
   public var apiSecret: String
   public var appInstanceId: String
   public var userId: String?
+  public var userData: UserData?
+  public var consent: Consent?
   
   public init(
     httpClient: HTTPClient,
     appId: String,
     apiSecret: String,
     appInstanceId: String,
-    userId: String? = nil
+    userId: String? = nil,
+    userData: UserData? = nil,
+    consent: Consent? = nil
   ) {
     self.httpClient = httpClient
     self.appId = appId
@@ -39,6 +43,8 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
       appInstanceId: appInstanceId,
       timestampMicros: .now,
       userId: userId,
+      userData: userData,
+      consent: consent,
       events: events
     )
     
@@ -77,6 +83,8 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
       appInstanceId: appInstanceId,
       timestampMicros: .now,
       userId: userId,
+      userData: userData,
+      consent: consent,
       events: events
     )
 
