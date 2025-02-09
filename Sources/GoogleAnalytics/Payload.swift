@@ -22,7 +22,7 @@ struct Payload<Paramters: Encodable>: Encodable {
     try container.encode(appInstanceId, forKey: .appInstanceId)
     try container.encodeIfPresent(userId, forKey: .userId)
     try container.encodeIfPresent(
-      timestampMicros.map { Int($0.timeIntervalSince1970) },
+      timestampMicros.map { UInt($0.timeIntervalSince1970 * 1_000_000) },
       forKey: .timestampMicros
     )
     try container.encode(events, forKey: .events)

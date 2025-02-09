@@ -9,6 +9,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
   public var baseUrl: URL = URL(string: "https://www.google-analytics.com/")!
   public var appId: String
   public var apiSecret: String
+  public var measurementId: String?
   public var appInstanceId: String
   public var userId: String?
   public var userData: UserData?
@@ -18,6 +19,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
     httpClient: HTTPClient,
     appId: String,
     apiSecret: String,
+    measurementId: String? = nil,
     appInstanceId: String,
     userId: String? = nil,
     userData: UserData? = nil,
@@ -27,7 +29,10 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
     self.appId = appId
     self.apiSecret = apiSecret
     self.appInstanceId = appInstanceId
+    self.measurementId = measurementId
     self.userId = userId
+    self.userData = userData
+    self.consent = consent
   }
 
   public func log<Paramters: Encodable>(
@@ -48,13 +53,19 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
       events: events
     )
     
+    var queries: [URLQueryItem] = [
+      .init(name: "api_secret", value: apiSecret),
+      .init(name: "firebase_app_id", value: appId),
+    ]
+    
+    if let measurementId {
+      queries.append(.init(name: "measurement_id", value: measurementId))
+    }
+    
     let endpoint =
       baseUrl
       .appending(path: "mp/collect")
-      .appending(queryItems: [
-        .init(name: "api_secret", value: apiSecret),
-        .init(name: "firebase_app_id", value: appId),
-      ])
+      .appending(queryItems: queries)
 
     let request = HTTPRequest(
       method: .post,
