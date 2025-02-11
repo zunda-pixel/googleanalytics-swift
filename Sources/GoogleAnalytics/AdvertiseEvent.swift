@@ -25,11 +25,10 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    
+
     try await log(for: event)
   }
 }
-
 
 struct AdvertiseEventParameters: Encodable {
   var platform: String?
@@ -39,7 +38,7 @@ struct AdvertiseEventParameters: Encodable {
   var price: Price?
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   private enum CodingKeys: String, CodingKey {
     case platform = "ad_platform"
     case format = "ad_format"
@@ -50,7 +49,7 @@ struct AdvertiseEventParameters: Encodable {
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.platform, forKey: .platform)
@@ -60,6 +59,9 @@ struct AdvertiseEventParameters: Encodable {
     try container.encode(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encode(self.price?.value, forKey: .value)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encode(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }

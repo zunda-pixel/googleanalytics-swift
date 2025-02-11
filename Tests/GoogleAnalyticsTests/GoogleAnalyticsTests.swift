@@ -14,7 +14,7 @@ let client = GoogleAnalytics(
     emailAddress: ["test@example.com"],
     phoneNumbers: ["08001234567"],
     address: [
-      .init(
+      Address(
         firstName: "Fist Name",
         lastName: "Last Name",
         street: "1234 Street",
@@ -66,10 +66,29 @@ func appOpenToPurchaseItem() async throws {
   try await client.removeFromCart(items: [.beer(quantiry: 1)], sessionId: sessionId)
   try await client.beginCheckout(items: [.beer(quantiry: 2)])
   let transactionId = UUID().uuidString
-  try await client.addPaymentInfo(paymentType: "CreditCard", items: [.beer(quantiry: 2)], sessionId: sessionId)
-  try await client.addShippingInfo(coupon: "BeerCoupon123", items: [.beer(quantiry: 2)], sessionId: sessionId)
-  try await client.purchase(transactionId: transactionId, coupon: "BeerCoupon123", tax: 1.99, shipping: 2.99 * 2, items: [.beer(quantiry: 2)], sessionId: sessionId)
-  try await client.refund(transactionId: transactionId, items: [.beer(quantiry: 2)], sessionId: sessionId)
+  try await client.addPaymentInfo(
+    paymentType: "CreditCard",
+    items: [.beer(quantiry: 2)],
+    sessionId: sessionId
+  )
+  try await client.addShippingInfo(
+    coupon: "BeerCoupon123",
+    items: [.beer(quantiry: 2)],
+    sessionId: sessionId
+  )
+  try await client.purchase(
+    transactionId: transactionId,
+    coupon: "BeerCoupon123",
+    tax: 1.99,
+    shipping: 2.99 * 2,
+    items: [.beer(quantiry: 2)],
+    sessionId: sessionId
+  )
+  try await client.refund(
+    transactionId: transactionId,
+    items: [.beer(quantiry: 2)],
+    sessionId: sessionId
+  )
 }
 
 @Test
@@ -82,7 +101,12 @@ func gameEvent() async throws {
   try await client.levelUp(level: 2, sessionId: sessionId)
   try await client.unlockAchievement(achievementId: UUID().uuidString, sessionId: sessionId)
   try await client.earnVirtualCurrency(currencyName: "Rupee", value: 123, sessionId: sessionId)
-  try await client.spendVirtualCurrency(itemName: "NewItem", currencyName: "Rupee", value: 56, sessionId: sessionId)
+  try await client.spendVirtualCurrency(
+    itemName: "NewItem",
+    currencyName: "Rupee",
+    value: 56,
+    sessionId: sessionId
+  )
 }
 extension Item {
   static func beer(quantiry: UInt) -> Item {

@@ -4,29 +4,32 @@ struct PriceParameters: Encodable {
   var price: Price?
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   private enum CodingKeys: String, CodingKey {
     case currency
     case value
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encode(self.price?.value, forKey: .value)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
-  
+
 struct PriceReasonParameters: Encodable {
   var price: Price?
   var reason: String?
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   private enum CodingKeys: String, CodingKey {
     case currency
     case value
@@ -34,14 +37,17 @@ struct PriceReasonParameters: Encodable {
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encode(self.price?.value, forKey: .value)
     try container.encodeIfPresent(self.reason, forKey: .reason)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
 
@@ -154,7 +160,7 @@ struct WorkingLeadParameters: Encodable {
   var leadStatus: String?
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   enum CodingKeys: String, CodingKey {
     case currency
     case value
@@ -162,13 +168,16 @@ struct WorkingLeadParameters: Encodable {
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encode(self.price?.value, forKey: .value)
     try container.encodeIfPresent(self.leadStatus, forKey: .leadStatus)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }

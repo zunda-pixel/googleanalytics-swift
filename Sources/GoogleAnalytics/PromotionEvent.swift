@@ -8,7 +8,7 @@ struct ViewPromotionParameters: Encodable {
   var items: [Item]
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   private enum CodingKeys: String, CodingKey {
     case id = "promotion_id"
     case name = "promotion_name"
@@ -18,7 +18,7 @@ struct ViewPromotionParameters: Encodable {
     case sessionId = "session_id"
     case engagementTime = "engagement_time"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(id, forKey: .id)
@@ -27,7 +27,10 @@ struct ViewPromotionParameters: Encodable {
     try container.encodeIfPresent(creativeSlot, forKey: .creativeSlot)
     try container.encode(items, forKey: .items)
     try container.encodeIfPresent(sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
 
@@ -57,7 +60,7 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    
+
     try await log(for: event)
   }
 }
@@ -66,20 +69,23 @@ struct GenerateLeadParameters: Encodable {
   var price: Price?
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   private enum CodingKeys: String, CodingKey {
     case currency
     case value
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(price?.value, forKey: .value)
     try container.encodeIfPresent(sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
 
@@ -100,7 +106,7 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    
+
     try await log(for: event)
   }
 }
@@ -140,10 +146,10 @@ extension GoogleAnalytics {
         "marketing_tactic": marketingTactic,
         "source_platform": sourcePlatform,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
-    
+
     try await log(for: event)
   }
 }

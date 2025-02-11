@@ -34,7 +34,7 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    
+
     try await log(for: event)
   }
 }
@@ -46,7 +46,7 @@ struct AddPaymentInfoParameters: Encodable {
   var items: [Item]
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   enum CodingKeys: String, CodingKey {
     case coupon
     case paymentType = "payment_type"
@@ -56,7 +56,7 @@ struct AddPaymentInfoParameters: Encodable {
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(self.coupon, forKey: .coupon)
@@ -65,7 +65,10 @@ struct AddPaymentInfoParameters: Encodable {
     try container.encodeIfPresent(self.price?.value, forKey: .value)
     try container.encode(self.items, forKey: .items)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
 
@@ -92,7 +95,7 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    
+
     try await log(for: event)
   }
 }
@@ -104,7 +107,7 @@ struct AddShippingInfoParameters: Encodable {
   var items: [Item]
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   enum CodingKeys: String, CodingKey {
     case coupon
     case shippingTier = "shipping_tier"
@@ -114,7 +117,7 @@ struct AddShippingInfoParameters: Encodable {
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(self.coupon, forKey: .coupon)
@@ -123,7 +126,10 @@ struct AddShippingInfoParameters: Encodable {
     try container.encodeIfPresent(self.price?.value, forKey: .value)
     try container.encode(self.items, forKey: .items)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
 
@@ -165,7 +171,7 @@ struct CartItemParameters: Encodable {
   var price: Price?
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   enum CodingKeys: String, CodingKey {
     case items
     case currency
@@ -173,19 +179,22 @@ struct CartItemParameters: Encodable {
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.items, forKey: .items)
     try container.encodeIfPresent(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(self.price?.value, forKey: .value)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
 
 extension GoogleAnalytics {
-  
+
   /// E-Commerce Add To Wishlist event.
   ///
   /// This event signifies that an item was added to a wishlist.
@@ -250,7 +259,7 @@ struct BeginCheckoutParameters: Encodable {
   var price: Price?
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   enum CodingKeys: String, CodingKey {
     case items
     case coupon
@@ -259,7 +268,7 @@ struct BeginCheckoutParameters: Encodable {
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.items, forKey: .items)
@@ -267,7 +276,10 @@ struct BeginCheckoutParameters: Encodable {
     try container.encodeIfPresent(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(self.price?.value, forKey: .value)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
 
@@ -280,7 +292,7 @@ struct PurchaseParameters: Encodable {
   var items: [Item]
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   enum CodingKeys: String, CodingKey {
     case transactionId = "transaction_id"
     case coupon
@@ -292,7 +304,7 @@ struct PurchaseParameters: Encodable {
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(self.transactionId, forKey: .transactionId)
@@ -303,7 +315,10 @@ struct PurchaseParameters: Encodable {
     try container.encodeIfPresent(self.shipping, forKey: .shipping)
     try container.encode(self.items, forKey: .items)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
 

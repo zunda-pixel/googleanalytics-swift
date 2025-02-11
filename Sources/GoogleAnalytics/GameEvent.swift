@@ -14,7 +14,7 @@ extension GoogleAnalytics {
       parameters: [
         "level_name": levelName,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
     try await log(for: event)
@@ -101,12 +101,12 @@ extension GoogleAnalytics {
       parameters: [
         "achievement_id": achievementId,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
     try await log(for: event)
   }
-  
+
   /// Earn Virtual Currency event.
   public func earnVirtualCurrency(
     currencyName: String,
@@ -155,20 +155,23 @@ struct EarnVirtualCurrencyParameters: Encodable {
   var value: Double
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   private enum CodingKeys: String, CodingKey {
     case currencyName = "virtual_currency_name"
     case value
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.currencyName, forKey: .currencyName)
     try container.encode(self.value, forKey: .value)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
 
@@ -178,7 +181,7 @@ struct SpendVirtualCurrencyParameters: Encodable {
   var value: Double
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   private enum CodingKeys: String, CodingKey {
     case itemName = "item_name"
     case currencyName = "virtual_currency_name"
@@ -186,17 +189,19 @@ struct SpendVirtualCurrencyParameters: Encodable {
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.itemName, forKey: .itemName)
     try container.encode(self.currencyName, forKey: .currencyName)
     try container.encode(self.value, forKey: .value)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
-
 
 struct PostScoreParameters: Encodable {
   var score: UInt
@@ -204,7 +209,7 @@ struct PostScoreParameters: Encodable {
   var character: String?
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   private enum CodingKeys: String, CodingKey {
     case score
     case level
@@ -212,14 +217,17 @@ struct PostScoreParameters: Encodable {
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.score, forKey: .score)
     try container.encodeIfPresent(self.level, forKey: .level)
     try container.encodeIfPresent(self.character, forKey: .character)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
 
@@ -228,26 +236,30 @@ struct LevelUpParametes: Encodable {
   var character: String?
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   private enum CodingKeys: String, CodingKey {
     case level
     case character
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.level, forKey: .level)
     try container.encodeIfPresent(self.character, forKey: .character)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
 
 struct LevelEndParametes: Encodable {
   var levelName: String
-  var success: Bool /// TODO - should be a int? 0 or 1
+  var success: Bool
+  /// TODO - should be a int? 0 or 1
   var sessionId: String?
   var engagementTime: TimeInterval?
 
@@ -257,13 +269,15 @@ struct LevelEndParametes: Encodable {
     case sessionId = "session_id"
     case engagementTime = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.levelName, forKey: .levelName)
     try container.encode(self.success, forKey: .success)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(self.engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTime)
+    try container.encodeIfPresent(
+      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTime
+    )
   }
 }
-

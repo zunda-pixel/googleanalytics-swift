@@ -17,7 +17,7 @@ public struct Item: Encodable, Sendable {
   public var listId: String?
   public var listName: String?
   public var locationId: String?
-  
+
   public init(
     id: String? = nil,
     name: String? = nil,
@@ -79,7 +79,7 @@ public struct Item: Encodable, Sendable {
     case listName = "list_name"
     case locationId
   }
-  
+
   public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(id, forKey: .id)

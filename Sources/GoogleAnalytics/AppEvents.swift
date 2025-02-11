@@ -14,13 +14,13 @@ extension GoogleAnalytics {
       parameters: [
         "method": method,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
-    
+
     try await log(for: event)
   }
-  
+
   /// Sign Up event.
   ///
   /// This event indicates that a user has signed up for an account in your app.
@@ -36,10 +36,10 @@ extension GoogleAnalytics {
       parameters: [
         "method": method,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
-    
+
     try await log(for: event)
   }
 
@@ -52,13 +52,13 @@ extension GoogleAnalytics {
       name: "app_open",
       parameters: [
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
-    
+
     try await log(for: event)
   }
-  
+
   /// App Open event.
   ///
   /// By logging this event when an App becomes active, developers can understand how often users leave and return during the course of a Session.
@@ -71,13 +71,13 @@ extension GoogleAnalytics {
       name: "app_open",
       parameters: [
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
-    
+
     try await log(for: event)
   }
-  
+
   /// Screen View event.
   ///
   /// This event signifies a screen view.
@@ -95,13 +95,13 @@ extension GoogleAnalytics {
         "screen_name": name,
         "screen_class": className,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
-    
+
     try await log(for: event)
   }
-  
+
   /// Search event.
   ///
   /// Apps that support search features can use this event to contextualize search operations by supplying the appropriate, corresponding parameters.
@@ -116,13 +116,13 @@ extension GoogleAnalytics {
       parameters: [
         "search_term": term,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
-    
+
     try await log(for: event)
   }
-  
+
   /// Select Content event.
   ///
   /// This general purpose event signifies that a user has selected some content of a certain type in an app.
@@ -139,13 +139,13 @@ extension GoogleAnalytics {
         "item_id": itemId,
         "content_type": contentType,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
-    
+
     try await log(for: event)
   }
-  
+
   /// Select Item event.
   ///
   /// This event signifies that an item was selected by a user from a list.
@@ -168,7 +168,7 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    
+
     try await log(for: event)
   }
 
@@ -199,7 +199,7 @@ extension GoogleAnalytics {
     )
     try await log(for: event)
   }
-  
+
   /// Share event.
   ///
   /// Apps with social features can log the Share event to identify the most viral content.
@@ -217,13 +217,13 @@ extension GoogleAnalytics {
         "item_id": itemId,
         "content_type": contentType,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
-    
+
     try await log(for: event)
   }
-  
+
   /// Tutorial Begin event.
   ///
   /// This event signifies the start of the on-boarding process in your app.
@@ -236,12 +236,12 @@ extension GoogleAnalytics {
       name: "tutorial_begin",
       parameters: [
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
     try await log(for: event)
   }
-  
+
   /// Tutorial End event.
   ///
   /// Use this event to signify the user's completion of your app's on-boarding process.
@@ -254,12 +254,12 @@ extension GoogleAnalytics {
       name: "tutorial_complete",
       parameters: [
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
     try await log(for: event)
   }
-  
+
   /// View Item event.
   ///
   /// This event signifies that a user has viewed an item.
@@ -280,10 +280,10 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    
+
     try await log(for: event)
   }
-  
+
   /// View Item List event.
   ///
   /// Log this event when a user sees a list of items or offerings.
@@ -306,7 +306,7 @@ extension GoogleAnalytics {
     )
     try await log(for: event)
   }
-  
+
   /// View Search Results event.
   ///
   /// Log this event when the user has been presented with the results of a search.
@@ -320,12 +320,12 @@ extension GoogleAnalytics {
       parameters: [
         "search_term": term,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
     try await log(for: event)
   }
-  
+
   /// Join Group event.
   ///
   /// Log this event when a user joins a group such as a guild, team or family.
@@ -340,7 +340,7 @@ extension GoogleAnalytics {
       parameters: [
         "group_id": groupId,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description
+        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
     try await log(for: event)
@@ -360,14 +360,17 @@ struct ViewItemParameters: Encodable {
     case sessionId = "session_id"
     case engagementTimeMsec = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(items, forKey: .items)
     try container.encodeIfPresent(price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(price?.value, forKey: .value)
     try container.encodeIfPresent(sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTimeMsec)
+    try container.encodeIfPresent(
+      engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTimeMsec
+    )
   }
 }
 
@@ -379,7 +382,7 @@ struct PromotionParameters: Encodable {
   var items: [Item]
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   private enum CodingKeys: String, CodingKey {
     case id = "promotion_id"
     case name = "promotion_name"
@@ -389,7 +392,7 @@ struct PromotionParameters: Encodable {
     case sessionId = "session_id"
     case engagementTimeMsec = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(id, forKey: .id)
@@ -398,7 +401,10 @@ struct PromotionParameters: Encodable {
     try container.encodeIfPresent(creativeSlot, forKey: .creativeSlot)
     try container.encode(items, forKey: .items)
     try container.encodeIfPresent(sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTimeMsec)
+    try container.encodeIfPresent(
+      engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTimeMsec
+    )
   }
 }
 
@@ -408,7 +414,7 @@ struct ItemListParameters: Encodable {
   var listName: String?
   var sessionId: String?
   var engagementTime: TimeInterval?
-  
+
   private enum CodingKeys: String, CodingKey {
     case items
     case listId = "item_list_id"
@@ -416,13 +422,16 @@ struct ItemListParameters: Encodable {
     case sessionId = "session_id"
     case engagementTimeMsec = "engagement_time_msec"
   }
-  
+
   func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(items, forKey: .items)
     try container.encodeIfPresent(listId, forKey: .listId)
     try container.encodeIfPresent(listName, forKey: .listName)
     try container.encodeIfPresent(sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(engagementTime.map { $0 * 1_000_000 }?.description, forKey: .engagementTimeMsec)
+    try container.encodeIfPresent(
+      engagementTime.map { $0 * 1_000_000 }?.description,
+      forKey: .engagementTimeMsec
+    )
   }
 }

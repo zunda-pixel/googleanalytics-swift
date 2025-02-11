@@ -14,7 +14,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
   public var userId: String?
   public var userData: UserData?
   public var consent: Consent?
-  
+
   public init(
     httpClient: HTTPClient,
     appId: String,
@@ -40,7 +40,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
   ) async throws {
     try await log(for: [event])
   }
-  
+
   public func log<Paramters: Encodable>(
     for events: [Event<Paramters>]
   ) async throws {
@@ -52,16 +52,16 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
       consent: consent,
       events: events
     )
-    
+
     var queries: [URLQueryItem] = [
       .init(name: "api_secret", value: apiSecret),
       .init(name: "firebase_app_id", value: appId),
     ]
-    
+
     if let measurementId {
       queries.append(.init(name: "measurement_id", value: measurementId))
     }
-    
+
     let endpoint =
       baseUrl
       .appending(path: "mp/collect")
@@ -103,16 +103,16 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
       .init(name: "api_secret", value: apiSecret),
       .init(name: "firebase_app_id", value: appId),
     ]
-    
+
     if let measurementId {
       queries.append(.init(name: "measurement_id", value: measurementId))
     }
-    
+
     let endpoint =
       baseUrl
       .appending(path: "debug/mp/collect")
       .appending(queryItems: queries)
-    
+
     let request = HTTPRequest(
       method: .post,
       url: endpoint,
@@ -129,18 +129,18 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
     )
 
     let validationMessages = try JSONDecoder().decode(ValidationResponse.self, from: data)
-    
+
     return validationMessages.message
   }
 }
 
 public struct ValidationResponse: Decodable {
   var message: [Message]
-  
+
   private enum CodingKeys: String, CodingKey {
     case message = "validationMessages"
   }
-  
+
   public struct Message: Decodable {
     public var fieldPath: String
     public var description: String
