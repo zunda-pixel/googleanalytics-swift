@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-  name: "GoogleAnalytics",
+  name: "googleanalytics-swift",
   platforms: [
     .iOS(.v18),
     .macOS(.v15),
