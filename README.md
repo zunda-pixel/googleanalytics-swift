@@ -8,8 +8,10 @@ let client = GoogleAnalytics(
   appInstanceId: UUID().uuidString.replacingOccurrences(of: "-", with: "")
 )
 
-try await client.log(for: Event(
-  name: "login",
-  parameters: ["method": "Google"]
-))
+try await client.log(
+  for: Event(
+    name: "login",
+    parameters: ["method": "Google"]
+  )
+)
 ```
