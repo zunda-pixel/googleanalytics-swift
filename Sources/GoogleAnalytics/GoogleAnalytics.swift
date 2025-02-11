@@ -99,13 +99,20 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
       events: events
     )
 
+    var queries: [URLQueryItem] = [
+      .init(name: "api_secret", value: apiSecret),
+      .init(name: "firebase_app_id", value: appId),
+    ]
+    
+    if let measurementId {
+      queries.append(.init(name: "measurement_id", value: measurementId))
+    }
+    
     let endpoint =
       baseUrl
       .appending(path: "debug/mp/collect")
-      .appending(queryItems: [
-        .init(name: "api_secret", value: apiSecret),
-        .init(name: "firebase_app_id", value: appId),
-      ])
+      .appending(queryItems: queries)
+    
     let request = HTTPRequest(
       method: .post,
       url: endpoint,

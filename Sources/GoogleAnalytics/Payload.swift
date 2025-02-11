@@ -20,11 +20,13 @@ struct Payload<Paramters: Encodable>: Encodable {
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(appInstanceId, forKey: .appInstanceId)
-    try container.encodeIfPresent(userId, forKey: .userId)
     try container.encodeIfPresent(
       timestampMicros.map { UInt($0.timeIntervalSince1970 * 1_000_000) },
       forKey: .timestampMicros
     )
+    try container.encodeIfPresent(userId, forKey: .userId)
+    try container.encodeIfPresent(userData, forKey: .userData)
+    try container.encodeIfPresent(consent, forKey: .consent)
     try container.encode(events, forKey: .events)
   }
 }
