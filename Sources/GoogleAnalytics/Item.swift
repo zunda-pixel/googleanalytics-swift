@@ -1,4 +1,4 @@
-public struct Item: Encodable {
+public struct Item: Encodable, Sendable {
   public var id: String?
   public var name: String?
   public var affiliation: String?
