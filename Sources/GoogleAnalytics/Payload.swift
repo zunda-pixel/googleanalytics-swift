@@ -1,10 +1,11 @@
 import Foundation
 
-struct Payload<Paramters: Encodable>: Encodable {
+struct Payload<Paramters: Encodable, UserProperties: Encodable>: Encodable {
   public var appInstanceId: String
   public var timestampMicros: Date?
   public var userId: String?
   public var userData: UserData?
+  public var userProperties: UserProperties?
   public var consent: Consent?
   public var events: [Event<Paramters>]
 
@@ -13,6 +14,7 @@ struct Payload<Paramters: Encodable>: Encodable {
     case timestampMicros = "timestamp_micros"
     case userId = "user_id"
     case userData = "user_data"
+    case userProperties = "user_properties"
     case consent
     case events
   }
@@ -26,6 +28,7 @@ struct Payload<Paramters: Encodable>: Encodable {
     )
     try container.encodeIfPresent(userId, forKey: .userId)
     try container.encodeIfPresent(userData, forKey: .userData)
+    try container.encodeIfPresent(userProperties, forKey: .userProperties)
     try container.encodeIfPresent(consent, forKey: .consent)
     try container.encode(events, forKey: .events)
   }

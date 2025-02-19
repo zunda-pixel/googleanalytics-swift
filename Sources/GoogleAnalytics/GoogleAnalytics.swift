@@ -2,9 +2,9 @@ import Foundation
 import HTTPClient
 import HTTPTypes
 
-extension GoogleAnalytics: Sendable where HTTPClient: Sendable {}
+extension GoogleAnalytics: Sendable where HTTPClient: Sendable, UserProperties: Sendable {}
 
-public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
+public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: Encodable> {
   public var httpClient: HTTPClient
   public var baseUrl: URL = URL(string: "https://www.google-analytics.com/")!
   public var appId: String
@@ -12,6 +12,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
   public var measurementId: String?
   public var appInstanceId: String
   public var userId: String?
+  public var userProperties: UserProperties?
   public var userData: UserData?
   public var consent: Consent?
 
@@ -22,6 +23,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
     measurementId: String? = nil,
     appInstanceId: String,
     userId: String? = nil,
+    userProperties: UserProperties? = nil,
     userData: UserData? = nil,
     consent: Consent? = nil
   ) {
@@ -31,8 +33,32 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
     self.appInstanceId = appInstanceId
     self.measurementId = measurementId
     self.userId = userId
+    self.userProperties = userProperties
     self.userData = userData
     self.consent = consent
+  }
+
+  public init(
+    httpClient: HTTPClient,
+    appId: String,
+    apiSecret: String,
+    measurementId: String? = nil,
+    appInstanceId: String,
+    userId: String? = nil,
+    userData: UserData? = nil,
+    consent: Consent? = nil
+  ) where UserProperties == Never {
+    self.init(
+      httpClient: httpClient,
+      appId: appId,
+      apiSecret: apiSecret,
+      measurementId: measurementId,
+      appInstanceId: appInstanceId,
+      userId: userId,
+      userProperties: nil,
+      userData: userData,
+      consent: consent
+    )
   }
 
   public func log<Paramters: Encodable>(
@@ -49,6 +75,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
       timestampMicros: .now,
       userId: userId,
       userData: userData,
+      userProperties: userProperties,
       consent: consent,
       events: events
     )
@@ -95,6 +122,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol> {
       timestampMicros: .now,
       userId: userId,
       userData: userData,
+      userProperties: userProperties,
       consent: consent,
       events: events
     )
