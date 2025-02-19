@@ -4,7 +4,7 @@ import HTTPTypes
 
 extension GoogleAnalytics: Sendable where HTTPClient: Sendable, UserProperties: Sendable {}
 
-public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: Encodable > {
+public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: Encodable> {
   public var httpClient: HTTPClient
   public var baseUrl: URL = URL(string: "https://www.google-analytics.com/")!
   public var appId: String
@@ -37,7 +37,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     self.userData = userData
     self.consent = consent
   }
-  
+
   public init(
     httpClient: HTTPClient,
     appId: String,
