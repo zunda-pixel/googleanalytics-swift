@@ -1,8 +1,10 @@
 import Algorithms
 import Crypto
 import Foundation
+import MemberwiseInit
 import RegexBuilder
 
+@MemberwiseInit(.public)
 public struct Address: Encodable, Sendable {
   public var firstName: String?
   public var lastName: String?
@@ -11,24 +13,6 @@ public struct Address: Encodable, Sendable {
   public var region: String?
   public var postalCode: String?
   public var country: String?
-
-  public init(
-    firstName: String? = nil,
-    lastName: String? = nil,
-    street: String? = nil,
-    city: String? = nil,
-    region: String? = nil,
-    postalCode: String? = nil,
-    country: String? = nil
-  ) {
-    self.firstName = firstName
-    self.lastName = lastName
-    self.street = street
-    self.city = city
-    self.region = region
-    self.postalCode = postalCode
-    self.country = country
-  }
 
   private enum CodingKeys: String, CodingKey {
     case firstName = "sha256_first_name"

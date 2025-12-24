@@ -1,11 +1,9 @@
+import MemberwiseInit
+
+@MemberwiseInit(.public)
 public struct Consent: Encodable, Sendable {
   public var adUserData: Mode?
   public var adPersonalization: Mode?
-
-  public init(adUserData: Mode? = nil, adPersonalization: Mode? = nil) {
-    self.adUserData = adUserData
-    self.adPersonalization = adPersonalization
-  }
 
   private enum CodingKeys: String, CodingKey {
     case adUserData = "ad_user_data"

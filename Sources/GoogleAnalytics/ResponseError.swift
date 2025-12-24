@@ -1,7 +1,9 @@
 import Foundation
 import HTTPTypes
+import MemberwiseInit
 
+@MemberwiseInit(.public)
 public struct ResponseError: Error {
-  var data: Data
-  var response: HTTPResponse
+  public var data: Data
+  public var response: HTTPResponse
 }

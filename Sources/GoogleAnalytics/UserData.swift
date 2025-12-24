@@ -1,21 +1,27 @@
 import Algorithms
 import Crypto
 import Foundation
+import MemberwiseInit
 
+@MemberwiseInit(.public)
 public struct UserData: Encodable, Sendable {
+  /// Hashed and encoded email address of the user. Normalized as such:
+  /// - lowercase
+  /// - remove periods before @ for gmail.com/googlemail.com addresses
+  /// - remove all spaces
+  /// - hash using SHA256 algorithm
+  /// - encode with hex string format.
   public var emailAddress: [String]
-  public var phoneNumbers: [String]
-  public var address: [Address]
 
-  public init(
-    emailAddress: [String],
-    phoneNumbers: [String],
-    address: [Address]
-  ) {
-    self.emailAddress = emailAddress
-    self.phoneNumbers = phoneNumbers
-    self.address = address
-  }
+  /// Hashed and encoded phone number of the user. Normalized as such:
+  /// - remove all non digit characters
+  /// - add + prefix
+  /// - hash using SHA256 algorithm
+  /// - encode with hex string format.
+  public var phoneNumbers: [String]
+
+  /// Identifies a user based on physical location.
+  public var address: [Address]
 
   private enum CodingKeys: String, CodingKey {
     case emailAddress = "sha256_email_address"

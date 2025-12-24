@@ -1,5 +1,7 @@
 import Foundation
+import MemberwiseInit
 
+@MemberwiseInit
 struct PriceParameters: Encodable {
   var price: Price?
   var sessionId: String?
@@ -24,6 +26,7 @@ struct PriceParameters: Encodable {
   }
 }
 
+@MemberwiseInit
 struct PriceReasonParameters: Encodable {
   var price: Price?
   var reason: String?
@@ -52,7 +55,6 @@ struct PriceReasonParameters: Encodable {
 }
 
 extension GoogleAnalytics {
-
   /// Close Convert  Lead Event.
   ///
   /// This event measures when a lead has been converted and closed (for example, through a purchase).
@@ -155,6 +157,7 @@ extension GoogleAnalytics {
   }
 }
 
+@MemberwiseInit
 struct WorkingLeadParameters: Encodable {
   var price: Price?
   var leadStatus: String?

@@ -1,4 +1,5 @@
 import Foundation
+import MemberwiseInit
 
 extension GoogleAnalytics {
   /// Add Payment Info event.
@@ -39,6 +40,7 @@ extension GoogleAnalytics {
   }
 }
 
+@MemberwiseInit
 struct AddPaymentInfoParameters: Encodable {
   var coupon: String?
   var paymentType: String?
@@ -100,6 +102,7 @@ extension GoogleAnalytics {
   }
 }
 
+@MemberwiseInit
 struct AddShippingInfoParameters: Encodable {
   var coupon: String?
   var shippingTier: String?
@@ -166,6 +169,7 @@ extension GoogleAnalytics {
   }
 }
 
+@MemberwiseInit
 struct CartItemParameters: Encodable {
   var items: [Item]
   var price: Price?
@@ -283,6 +287,7 @@ struct BeginCheckoutParameters: Encodable {
   }
 }
 
+@MemberwiseInit()
 struct PurchaseParameters: Encodable {
   var transactionId: String?
   var coupon: String?

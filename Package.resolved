@@ -1,5 +1,5 @@
 {
-  "originHash" : "508394ffd719521367f76b08a6d7e3582779829f20a48bd1db6790f3b4eb7e1c",
+  "originHash" : "f5e9bfe11594df38787a8bd4d3b88d2b8860d7e2c0028c6eea798ef4531007cf",
   "pins" : [
     {
       "identity" : "http-client",
@@ -56,12 +56,75 @@
       }
     },
     {
+      "identity" : "swift-incits-4-1986",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swift-standards/swift-incits-4-1986",
+      "state" : {
+        "revision" : "5e0ac8ce2e69663d690bc12993c9cebefffae613",
+        "version" : "0.7.1"
+      }
+    },
+    {
+      "identity" : "swift-iso-3166",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swift-standards/swift-iso-3166.git",
+      "state" : {
+        "revision" : "e521592a10e1bf549fce56c4a77b11b532bba1ce",
+        "version" : "0.2.3"
+      }
+    },
+    {
+      "identity" : "swift-memberwise-init-macro",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gohanlon/swift-memberwise-init-macro.git",
+      "state" : {
+        "revision" : "47a2bdf45f1567e7324438f8482e362ee1c3fb44",
+        "version" : "0.5.2"
+      }
+    },
+    {
+      "identity" : "swift-memory-allocation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/coenttb/swift-memory-allocation",
+      "state" : {
+        "revision" : "afe7e86f16981007b841470d5ea79f0026868bc3",
+        "version" : "0.2.0"
+      }
+    },
+    {
       "identity" : "swift-numerics",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-numerics.git",
       "state" : {
         "revision" : "0a5bc04095a675662cf24757cc0640aa2204253b",
         "version" : "1.0.2"
+      }
+    },
+    {
+      "identity" : "swift-standards",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swift-standards/swift-standards",
+      "state" : {
+        "revision" : "6586b6964aa0ea55944a7f6541ae7427f3cf98eb",
+        "version" : "0.21.0"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax",
+      "state" : {
+        "revision" : "0687f71944021d616d34d922343dcef086855920",
+        "version" : "600.0.1"
+      }
+    },
+    {
+      "identity" : "swift-testing-performance",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/coenttb/swift-testing-performance",
+      "state" : {
+        "revision" : "1a1967f7acfcb081e57122db463817c142cc7186",
+        "version" : "0.3.1"
       }
     }
   ],
