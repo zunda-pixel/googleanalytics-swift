@@ -8,10 +8,12 @@ extension GoogleAnalytics {
   public func login(
     method: String,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "login",
+      timestamp: timestamp,
       parameters: [
         "method": method,
         "session_id": sessionId,
@@ -30,10 +32,12 @@ extension GoogleAnalytics {
   public func signUp(
     method: String,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "sign_up",
+      timestamp: timestamp,
       parameters: [
         "method": method,
         "session_id": sessionId,
@@ -47,10 +51,12 @@ extension GoogleAnalytics {
   /// Session Start event.
   public func sessionStart(
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "app_open",
+      timestamp: timestamp,
       parameters: [
         "session_id": sessionId,
         "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
@@ -66,10 +72,12 @@ extension GoogleAnalytics {
   /// Although Sessions are automatically reported, this event can provide further clarification around the continuous engagement of app-users.
   public func appOpen(
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "app_open",
+      timestamp: timestamp,
       parameters: [
         "session_id": sessionId,
         "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
@@ -88,10 +96,12 @@ extension GoogleAnalytics {
     name: String? = nil,
     className: String? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "screen_view",
+      timestamp: timestamp,
       parameters: [
         "screen_name": name,
         "screen_class": className,
@@ -110,10 +120,12 @@ extension GoogleAnalytics {
   public func search(
     term: String,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "search",
+      timestamp: timestamp,
       parameters: [
         "search_term": term,
         "session_id": sessionId,
@@ -132,10 +144,12 @@ extension GoogleAnalytics {
     itemId: String,
     contentType: String,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "select_content",
+      timestamp: timestamp,
       parameters: [
         "item_id": itemId,
         "content_type": contentType,
@@ -157,10 +171,12 @@ extension GoogleAnalytics {
     listId: String? = nil,
     listName: String? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "select_item",
+      timestamp: timestamp,
       parameters: ItemListParameters(
         items: items,
         listId: listId,
@@ -184,10 +200,12 @@ extension GoogleAnalytics {
     creativeSlot: String? = nil,
     items: [Item],
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "select_promotion",
+      timestamp: timestamp,
       parameters: PromotionParameters(
         id: promotionId,
         name: promotionName,
@@ -209,10 +227,12 @@ extension GoogleAnalytics {
     itemId: String,
     contentType: String,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "share",
+      timestamp: timestamp,
       parameters: [
         "method": method,
         "item_id": itemId,
@@ -231,10 +251,12 @@ extension GoogleAnalytics {
   /// Use this in a funnel with tutorialComplete to understand how many users complete this process and move on to the full app experience.
   public func tutorialBegin(
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "tutorial_begin",
+      timestamp: timestamp,
       parameters: [
         "session_id": sessionId,
         "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
@@ -249,10 +271,12 @@ extension GoogleAnalytics {
   /// Add this to a funnel with tutorialBegin to gauge the completion rate of your on-boarding process.
   public func tutorialComplete(
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "tutorial_complete",
+      timestamp: timestamp,
       parameters: [
         "session_id": sessionId,
         "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
@@ -270,10 +294,12 @@ extension GoogleAnalytics {
     items: [Item],
     price: Price? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "view_item",
+      timestamp: timestamp,
       parameters: ViewItemParameters(
         items: items,
         price: price,
@@ -293,10 +319,12 @@ extension GoogleAnalytics {
     listId: String? = nil,
     listName: String? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "view_item_list",
+      timestamp: timestamp,
       parameters: ItemListParameters(
         items: items,
         listId: listId,
@@ -314,10 +342,12 @@ extension GoogleAnalytics {
   public func viewSearchResults(
     term: String,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "view_search_results",
+      timestamp: timestamp,
       parameters: [
         "search_term": term,
         "session_id": sessionId,
@@ -334,10 +364,12 @@ extension GoogleAnalytics {
   public func joinGroup(
     id groupId: String,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "join_group",
+      timestamp: timestamp,
       parameters: [
         "group_id": groupId,
         "session_id": sessionId,

@@ -65,7 +65,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     let payload = Payload(
       appInstanceId: appInstanceId,
       userId: userId,
-      timestampMicros: .now,
+      timestamp: .now,
       userProperties: userProperties,
       userData: userData,
       consent: consent,
@@ -115,7 +115,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     let payload = Payload(
       appInstanceId: appInstanceId,
       userId: userId,
-      timestampMicros: .now,
+      timestamp: .now,
       userProperties: userProperties,
       userData: userData,
       consent: consent,

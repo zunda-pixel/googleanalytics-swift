@@ -61,10 +61,12 @@ extension GoogleAnalytics {
   public func closeConvertLead(
     price: Price? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "close_convert_lead",
+      timestamp: timestamp,
       parameters: PriceParameters(
         price: price,
         sessionId: sessionId,
@@ -81,10 +83,12 @@ extension GoogleAnalytics {
     price: Price? = nil,
     reason: String? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "close_convert_lead",
+      timestamp: timestamp,
       parameters: PriceReasonParameters(
         price: price,
         reason: reason,
@@ -102,10 +106,12 @@ extension GoogleAnalytics {
     price: Price? = nil,
     reason: String? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "disqualify_lead",
+      timestamp: timestamp,
       parameters: PriceReasonParameters(
         price: price,
         reason: reason,
@@ -122,10 +128,12 @@ extension GoogleAnalytics {
   public func qualifyLead(
     price: Price? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "qualify_lead",
+      timestamp: timestamp,
       parameters: PriceParameters(
         price: price,
         sessionId: sessionId,
@@ -142,10 +150,12 @@ extension GoogleAnalytics {
     price: Price? = nil,
     leadStatus: String? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "working_lead",
+      timestamp: timestamp,
       parameters: WorkingLeadParameters(
         price: price,
         leadStatus: leadStatus,

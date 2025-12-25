@@ -12,10 +12,12 @@ extension GoogleAnalytics {
     unitName: String? = nil,
     price: Price? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "ad_impression",
+      timestamp: timestamp,
       parameters: AdvertiseEventParameters(
         platform: platform,
         format: format,

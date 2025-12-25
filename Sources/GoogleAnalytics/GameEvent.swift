@@ -8,10 +8,12 @@ extension GoogleAnalytics {
   public func levelStart(
     levelName: String,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "level_start",
+      timestamp: timestamp,
       parameters: [
         "level_name": levelName,
         "session_id": sessionId,
@@ -29,10 +31,12 @@ extension GoogleAnalytics {
     level: UInt,
     character: String? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "level_up",
+      timestamp: timestamp,
       parameters: LevelUpParametes(
         level: level,
         character: character,
@@ -50,10 +54,12 @@ extension GoogleAnalytics {
     levelName: String,
     success: Bool,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "level_end",
+      timestamp: timestamp,
       parameters: LevelEndParametes(
         levelName: levelName,
         success: success,
@@ -73,10 +79,12 @@ extension GoogleAnalytics {
     level: UInt? = nil,
     character: String? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "post_score",
+      timestamp: timestamp,
       parameters: PostScoreParameters(
         score: score,
         level: level,
@@ -95,10 +103,12 @@ extension GoogleAnalytics {
   public func unlockAchievement(
     achievementId: String,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "unlock_achievement",
+      timestamp: timestamp,
       parameters: [
         "achievement_id": achievementId,
         "session_id": sessionId,
@@ -113,10 +123,12 @@ extension GoogleAnalytics {
     currencyName: String,
     value: Double,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "earn_virtual_currency",
+      timestamp: timestamp,
       parameters: EarnVirtualCurrencyParameters(
         currencyName: currencyName,
         value: value,
@@ -135,10 +147,12 @@ extension GoogleAnalytics {
     currencyName: String,
     value: Double,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "spend_virtual_currency",
+      timestamp: timestamp,
       parameters: SpendVirtualCurrencyParameters(
         itemName: itemName,
         currencyName: currencyName,
