@@ -12,7 +12,7 @@ public struct Event<Parameters: Encodable>: Encodable {
     case timestamp = "timestamp_micros"
     case parameters = "params"
   }
-  
+
   public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.name, forKey: .name)

@@ -62,7 +62,7 @@ func validatePayload() async throws {
     parameters: [
       "key": "value1",
       "session_id": UUID().uuidString,
-      "engagement_time_msec": "100"
+      "engagement_time_msec": "100",
     ]
   )
 
