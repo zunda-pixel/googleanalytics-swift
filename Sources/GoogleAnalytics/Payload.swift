@@ -1,21 +1,31 @@
 import Foundation
+import MemberwiseInit
 
+@MemberwiseInit(.public)
 struct Payload<Paramters: Encodable, UserProperties: Encodable>: Encodable {
   public var appInstanceId: String
-  public var timestampMicros: Date?
   public var userId: String?
-  public var userData: UserData?
+  public var timestampMicros: Date?
   public var userProperties: UserProperties?
+  public var userData: UserData?
   public var consent: Consent?
+  public var userLocation: UserLocation?
+  public var ipOverride: String?
+  public var device: Device?
+  public var validationBehavior: ValidationBehavior = .relaxed
   public var events: [Event<Paramters>]
 
   private enum CodingKeys: String, CodingKey {
     case appInstanceId = "app_instance_id"
-    case timestampMicros = "timestamp_micros"
     case userId = "user_id"
-    case userData = "user_data"
+    case timestampMicros = "timestamp_micros"
     case userProperties = "user_properties"
+    case userData = "user_data"
     case consent
+    case userLocation = "user_location"
+    case ipOverride = "ip_override"
+    case device
+    case validationBehavior = "validation_behavior"
     case events
   }
 
@@ -28,8 +38,14 @@ struct Payload<Paramters: Encodable, UserProperties: Encodable>: Encodable {
     )
     try container.encodeIfPresent(userId, forKey: .userId)
     try container.encodeIfPresent(userData, forKey: .userData)
+    try container.encodeIfPresent(userLocation, forKey: .userLocation)
     try container.encodeIfPresent(userProperties, forKey: .userProperties)
     try container.encodeIfPresent(consent, forKey: .consent)
     try container.encode(events, forKey: .events)
   }
+}
+
+public enum ValidationBehavior: String, Sendable, Codable, Hashable {
+  case relaxed = "RELAXED"
+  case enforceRecommendations = "ENFORCE_RECOMMENDATIONS"
 }

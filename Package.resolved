@@ -1,5 +1,5 @@
 {
-  "originHash" : "f5e9bfe11594df38787a8bd4d3b88d2b8860d7e2c0028c6eea798ef4531007cf",
+  "originHash" : "c4e9b620698ff007516ab05eadedcbfd4642921d63d2a86c5e6888838e991f4f",
   "pins" : [
     {
       "identity" : "http-client",
@@ -70,6 +70,15 @@
       "location" : "https://github.com/swift-standards/swift-iso-3166.git",
       "state" : {
         "revision" : "e521592a10e1bf549fce56c4a77b11b532bba1ce",
+        "version" : "0.2.3"
+      }
+    },
+    {
+      "identity" : "swift-iso-639",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swift-standards/swift-iso-639.git",
+      "state" : {
+        "revision" : "8e783ad8b09cfc289f1bc362a0e61af8b383038f",
         "version" : "0.2.3"
       }
     },

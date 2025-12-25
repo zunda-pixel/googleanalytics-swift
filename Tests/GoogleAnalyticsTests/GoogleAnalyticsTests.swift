@@ -28,6 +28,26 @@ let client = GoogleAnalytics(
   consent: Consent(
     adUserData: .granted,
     adPersonalization: .granted
+  ),
+  userLocation: UserLocation(
+    city: "Tokyo",
+    regionID: .jpn,
+    countryID: .jp,
+    subcontinentID: .southernAsia,
+    continentID: nil
+  ),
+  ipOverride: nil,
+  device: .init(
+    category: .deskop,
+    language: try! .init("jpn"),
+    screenResolution: .init(width: 1080, height: 1920),
+    os: .init(name: "macOS Tahoe", verison: "26.2"),
+    model: "Mac mini M4",
+    brand: "Apple",
+    browser: Browswer(
+      name: "Safari",
+      verison: "Version 26.3 (21623.2.2.11.1)"
+    )
   )
 )
 
@@ -42,6 +62,7 @@ func validatePayload() async throws {
   )
 
   let messages = try await client.validatePayload(for: [loginEvent])
+  #expect(messages.isEmpty)
   print(messages)
 }
 
@@ -108,6 +129,7 @@ func gameEvent() async throws {
     sessionId: sessionId
   )
 }
+
 extension Item {
   static func beer(quantiry: UInt) -> Item {
     Item(
@@ -117,11 +139,18 @@ extension Item {
       category: "Alchol",
       category2: "Beer",
       category3: "IPA",
+      category4: nil,
+      category5: nil,
       variant: "24 Pack",
       brand: "Beer Brand",
       price: Price(currency: .usd, value: 2.99),
       discount: 1.99,
-      quantity: quantiry
+      index: nil,
+      quantity: quantiry,
+      coupon: nil,
+      listId: nil,
+      listName: nil,
+      locationId: nil
     )
   }
 }
