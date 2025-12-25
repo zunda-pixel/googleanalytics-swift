@@ -48,10 +48,12 @@ extension GoogleAnalytics {
     creativeSlot: String? = nil,
     items: [Item],
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "view_promotion",
+      timestamp: timestamp,
       parameters: ViewPromotionParameters(
         id: promotionId,
         name: promotionName,
@@ -99,10 +101,12 @@ extension GoogleAnalytics {
   public func generateLead(
     price: Price? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "generate_lead",
+      timestamp: timestamp,
       parameters: GenerateLeadParameters(
         price: price,
         sessionId: sessionId,
@@ -132,10 +136,12 @@ extension GoogleAnalytics {
     marketingTactic: String? = nil,
     sourcePlatform: String? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "campaign_details",
+      timestamp: timestamp,
       parameters: [
         "source": source,
         "medium": medium,

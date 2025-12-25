@@ -22,10 +22,12 @@ extension GoogleAnalytics {
     price: Price? = nil,
     items: [Item],
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "add_payment_info",
+      timestamp: timestamp,
       parameters: AddPaymentInfoParameters(
         coupon: coupon,
         paymentType: paymentType,
@@ -84,10 +86,12 @@ extension GoogleAnalytics {
     price: Price? = nil,
     items: [Item],
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "add_shipping_info",
+      timestamp: timestamp,
       parameters: AddShippingInfoParameters(
         coupon: coupon,
         shippingTier: shippingTier,
@@ -154,10 +158,12 @@ extension GoogleAnalytics {
     items: [Item],
     price: Price? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "add_to_cart",
+      timestamp: timestamp,
       parameters: CartItemParameters(
         items: items,
         price: price,
@@ -216,10 +222,12 @@ extension GoogleAnalytics {
     items: [Item],
     price: Price? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "add_to_wishlist",
+      timestamp: timestamp,
       parameters: CartItemParameters(
         items: items,
         price: price,
@@ -241,10 +249,12 @@ extension GoogleAnalytics {
     coupon: String? = nil,
     price: Price? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "begin_checkout",
+      timestamp: timestamp,
       parameters: BeginCheckoutParameters(
         items: items,
         coupon: coupon,
@@ -339,10 +349,12 @@ extension GoogleAnalytics {
     shipping: Double? = nil,
     items: [Item],
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "purchase",
+      timestamp: timestamp,
       parameters: PurchaseParameters(
         transactionId: transactionId,
         coupon: coupon,
@@ -368,10 +380,12 @@ extension GoogleAnalytics {
     shipping: Double? = nil,
     items: [Item]? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "refund",
+      timestamp: timestamp,
       parameters: PurchaseParameters(
         transactionId: transactionId,
         coupon: coupon,
@@ -393,10 +407,12 @@ extension GoogleAnalytics {
     items: [Item],
     price: Price? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "remove_from_cart",
+      timestamp: timestamp,
       parameters: CartItemParameters(
         items: items,
         price: price,
@@ -415,10 +431,12 @@ extension GoogleAnalytics {
     items: [Item],
     price: Price? = nil,
     sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil
+    engagementTime: TimeInterval? = nil,
+    timestamp: Date? = nil
   ) async throws {
     let event = Event(
       name: "view_cart",
+      timestamp: timestamp,
       parameters: CartItemParameters(
         items: items,
         price: price,

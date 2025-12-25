@@ -58,7 +58,12 @@ func validatePayload() async throws {
   }
   let loginEvent = Event(
     name: "login",
-    parameters: ["key": "value1"]
+    timestamp: .now,
+    parameters: [
+      "key": "value1",
+      "session_id": UUID().uuidString,
+      "engagement_time_msec": "100",
+    ]
   )
 
   let messages = try await client.validatePayload(for: [loginEvent])
@@ -69,9 +74,9 @@ func validatePayload() async throws {
 @Test
 func appOpenToPurchaseItem() async throws {
   let sessionId = UUID().uuidString
-  try await client.sessionStart(sessionId: sessionId)
-  try await client.appOpen(sessionId: sessionId)
-  try await client.screenView(name: "TutorialView", sessionId: sessionId)
+  try await client.sessionStart(sessionId: sessionId, engagementTime: 0)
+  try await client.appOpen(sessionId: sessionId, engagementTime: 1)
+  try await client.screenView(name: "TutorialView", sessionId: sessionId, engagementTime: 1)
   try await client.tutorialBegin(sessionId: sessionId, engagementTime: 3)
   try await client.tutorialComplete(sessionId: sessionId, engagementTime: 6)
   try await client.screenView(name: "TopView", sessionId: sessionId)
@@ -115,7 +120,6 @@ func appOpenToPurchaseItem() async throws {
 @Test
 func gameEvent() async throws {
   let sessionId = UUID().uuidString
-  try await client.sessionStart(sessionId: sessionId)
   try await client.levelStart(levelName: "Level 1", sessionId: sessionId)
   try await client.postScore(score: 100, sessionId: sessionId)
   try await client.levelEnd(levelName: "Level 1", success: true, sessionId: sessionId)
