@@ -58,7 +58,7 @@ func validatePayload() async throws {
   }
   let loginEvent = Event(
     name: "login",
-    timestamp: nil,
+    timestamp: .now,
     parameters: [
       "key": "value1",
       "session_id": UUID().uuidString,
