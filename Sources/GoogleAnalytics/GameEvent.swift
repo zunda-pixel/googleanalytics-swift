@@ -1,4 +1,5 @@
 import Foundation
+import MemberwiseInit
 
 extension GoogleAnalytics {
   /// Level Start event.
@@ -150,6 +151,7 @@ extension GoogleAnalytics {
   }
 }
 
+@MemberwiseInit
 struct EarnVirtualCurrencyParameters: Encodable {
   var currencyName: String
   var value: Double
@@ -175,6 +177,7 @@ struct EarnVirtualCurrencyParameters: Encodable {
   }
 }
 
+@MemberwiseInit
 struct SpendVirtualCurrencyParameters: Encodable {
   var itemName: String
   var currencyName: String
@@ -203,6 +206,7 @@ struct SpendVirtualCurrencyParameters: Encodable {
   }
 }
 
+@MemberwiseInit
 struct PostScoreParameters: Encodable {
   var score: UInt
   var level: UInt?
@@ -231,6 +235,7 @@ struct PostScoreParameters: Encodable {
   }
 }
 
+@MemberwiseInit
 struct LevelUpParametes: Encodable {
   var level: UInt
   var character: String?
@@ -256,6 +261,7 @@ struct LevelUpParametes: Encodable {
   }
 }
 
+@MemberwiseInit
 struct LevelEndParametes: Encodable {
   var levelName: String
   var success: Bool

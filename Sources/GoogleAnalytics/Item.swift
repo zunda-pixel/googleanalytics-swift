@@ -1,3 +1,6 @@
+import MemberwiseInit
+
+@MemberwiseInit(.public)
 public struct Item: Encodable, Sendable {
   public var id: String?
   public var name: String?
@@ -17,46 +20,6 @@ public struct Item: Encodable, Sendable {
   public var listId: String?
   public var listName: String?
   public var locationId: String?
-
-  public init(
-    id: String? = nil,
-    name: String? = nil,
-    affiliation: String? = nil,
-    category: String? = nil,
-    category2: String? = nil,
-    category3: String? = nil,
-    category4: String? = nil,
-    category5: String? = nil,
-    variant: String? = nil,
-    brand: String? = nil,
-    price: Price? = nil,
-    discount: Double? = nil,
-    index: UInt? = nil,
-    quantity: UInt? = nil,
-    coupon: String? = nil,
-    listId: String? = nil,
-    listName: String? = nil,
-    locationId: String? = nil
-  ) {
-    self.id = id
-    self.name = name
-    self.affiliation = affiliation
-    self.category = category
-    self.category2 = category2
-    self.category3 = category3
-    self.category4 = category4
-    self.category5 = category5
-    self.variant = variant
-    self.brand = brand
-    self.price = price
-    self.discount = discount
-    self.index = index
-    self.quantity = quantity
-    self.coupon = coupon
-    self.listId = listId
-    self.listName = listName
-    self.locationId = locationId
-  }
 
   private enum CodingKeys: String, CodingKey {
     case id = "item_id"

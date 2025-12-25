@@ -1,4 +1,5 @@
 import Foundation
+import MemberwiseInit
 
 extension GoogleAnalytics {
   /// Login event.
@@ -374,6 +375,7 @@ struct ViewItemParameters: Encodable {
   }
 }
 
+@MemberwiseInit
 struct PromotionParameters: Encodable {
   var id: String?
   var name: String?

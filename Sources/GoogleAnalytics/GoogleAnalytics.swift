@@ -1,9 +1,11 @@
 import Foundation
 import HTTPClient
 import HTTPTypes
+import MemberwiseInit
 
 extension GoogleAnalytics: Sendable where HTTPClient: Sendable, UserProperties: Sendable {}
 
+@MemberwiseInit(.public)
 public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: Encodable> {
   public var httpClient: HTTPClient
   public var baseUrl: URL = URL(string: "https://www.google-analytics.com/")!
@@ -15,50 +17,40 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   public var userProperties: UserProperties?
   public var userData: UserData?
   public var consent: Consent?
+  public var userLocation: UserLocation?
+  public var ipOverride: String?
+  public var device: Device?
+  public var validationBehavior: ValidationBehavior = .relaxed
 
   public init(
     httpClient: HTTPClient,
+    baseUrl: URL = URL(string: "https://www.google-analytics.com/")!,
     appId: String,
     apiSecret: String,
-    measurementId: String? = nil,
+    measurementId: String?,
     appInstanceId: String,
-    userId: String? = nil,
-    userProperties: UserProperties? = nil,
-    userData: UserData? = nil,
-    consent: Consent? = nil
-  ) {
+    userId: String?,
+    userData: UserData?,
+    consent: Consent?,
+    userLocation: UserLocation?,
+    ipOverride: String?,
+    device: Device?,
+    validationBehavior: ValidationBehavior = .relaxed
+  ) where UserProperties == Never {
     self.httpClient = httpClient
+    self.baseUrl = baseUrl
     self.appId = appId
     self.apiSecret = apiSecret
-    self.appInstanceId = appInstanceId
     self.measurementId = measurementId
+    self.appInstanceId = appInstanceId
     self.userId = userId
-    self.userProperties = userProperties
+    self.userProperties = nil
     self.userData = userData
     self.consent = consent
-  }
-
-  public init(
-    httpClient: HTTPClient,
-    appId: String,
-    apiSecret: String,
-    measurementId: String? = nil,
-    appInstanceId: String,
-    userId: String? = nil,
-    userData: UserData? = nil,
-    consent: Consent? = nil
-  ) where UserProperties == Never {
-    self.init(
-      httpClient: httpClient,
-      appId: appId,
-      apiSecret: apiSecret,
-      measurementId: measurementId,
-      appInstanceId: appInstanceId,
-      userId: userId,
-      userProperties: nil,
-      userData: userData,
-      consent: consent
-    )
+    self.userLocation = userLocation
+    self.ipOverride = ipOverride
+    self.device = device
+    self.validationBehavior = validationBehavior
   }
 
   public func log<Paramters: Encodable>(
@@ -72,11 +64,14 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   ) async throws {
     let payload = Payload(
       appInstanceId: appInstanceId,
-      timestampMicros: .now,
       userId: userId,
-      userData: userData,
+      timestampMicros: .now,
       userProperties: userProperties,
+      userData: userData,
       consent: consent,
+      userLocation: userLocation,
+      ipOverride: ipOverride,
+      device: device,
       events: events
     )
 
@@ -109,7 +104,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
       from: bodyData
     )
 
-    guard response.status.code == 204 else {
+    guard response.status == .noContent else {
       throw ResponseError(data: data, response: response)
     }
   }
@@ -119,11 +114,14 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   ) async throws -> [ValidationResponse.Message] {
     let payload = Payload(
       appInstanceId: appInstanceId,
-      timestampMicros: .now,
       userId: userId,
-      userData: userData,
+      timestampMicros: .now,
       userProperties: userProperties,
+      userData: userData,
       consent: consent,
+      userLocation: userLocation,
+      ipOverride: ipOverride,
+      device: device,
       events: events
     )
 
@@ -151,10 +149,14 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
 
     let bodyData = try JSONEncoder().encode(payload)
 
-    let (data, _) = try await httpClient.execute(
+    let (data, response) = try await httpClient.execute(
       for: request,
       from: bodyData
     )
+
+    guard response.status == .ok else {
+      throw ResponseError(data: data, response: response)
+    }
 
     let validationMessages = try JSONDecoder().decode(ValidationResponse.self, from: data)
 
@@ -162,8 +164,9 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   }
 }
 
+@MemberwiseInit(.public)
 public struct ValidationResponse: Decodable {
-  var message: [Message]
+  public var message: [Message]
 
   private enum CodingKeys: String, CodingKey {
     case message = "validationMessages"

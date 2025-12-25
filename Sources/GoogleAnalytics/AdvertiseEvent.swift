@@ -1,4 +1,5 @@
 import Foundation
+import MemberwiseInit
 
 extension GoogleAnalytics {
   /// Ad Impression event.
@@ -30,6 +31,7 @@ extension GoogleAnalytics {
   }
 }
 
+@MemberwiseInit
 struct AdvertiseEventParameters: Encodable {
   var platform: String?
   var format: String?

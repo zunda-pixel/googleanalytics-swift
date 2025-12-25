@@ -1,5 +1,7 @@
 import Foundation
+import MemberwiseInit
 
+@MemberwiseInit
 struct ViewPromotionParameters: Encodable {
   var id: String?
   var name: String?
@@ -65,6 +67,7 @@ extension GoogleAnalytics {
   }
 }
 
+@MemberwiseInit
 struct GenerateLeadParameters: Encodable {
   var price: Price?
   var sessionId: String?
