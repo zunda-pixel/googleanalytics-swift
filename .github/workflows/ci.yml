@@ -13,6 +13,7 @@ jobs:
       env:
         APP_ID: ${{ secrets.APP_ID }}
         API_SECRET: ${{ secrets.API_SECRET }}
+        APP_INSTANCE_ID: ${{ secrets.APP_INSTANCE_ID }}
   lint:
     runs-on: ubuntu-24.04-arm
     container: swift:latest

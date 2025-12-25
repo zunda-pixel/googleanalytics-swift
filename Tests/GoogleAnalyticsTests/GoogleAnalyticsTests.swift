@@ -7,8 +7,8 @@ let client = GoogleAnalytics(
   httpClient: .urlSession(.shared),
   appId: ProcessInfo.processInfo.environment["APP_ID"]!,
   apiSecret: ProcessInfo.processInfo.environment["API_SECRET"]!,
+  appInstanceId: ProcessInfo.processInfo.environment["APP_INSTANCE_ID"]!,
   measurementId: ProcessInfo.processInfo.environment["MEASTUREMENT_ID"],
-  appInstanceId: UUID().uuidString.replacingOccurrences(of: "-", with: ""),
   userId: "555666777888",
   userData: UserData(
     emailAddress: ["test@example.com"],
