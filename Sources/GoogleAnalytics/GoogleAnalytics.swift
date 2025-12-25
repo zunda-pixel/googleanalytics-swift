@@ -11,8 +11,8 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   public var baseUrl: URL = URL(string: "https://www.google-analytics.com/")!
   public var appId: String
   public var apiSecret: String
-  public var measurementId: String?
   public var appInstanceId: String
+  public var measurementId: String?
   public var userId: String?
   public var userProperties: UserProperties?
   public var userData: UserData?
@@ -27,8 +27,8 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     baseUrl: URL = URL(string: "https://www.google-analytics.com/")!,
     appId: String,
     apiSecret: String,
-    measurementId: String?,
     appInstanceId: String,
+    measurementId: String?,
     userId: String?,
     userData: UserData?,
     consent: Consent?,
