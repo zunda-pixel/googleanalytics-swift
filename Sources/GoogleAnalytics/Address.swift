@@ -42,7 +42,7 @@ public struct Address: Encodable, Sendable {
   func hashEncode(_ value: String) -> String {
     var value = value.trimming(while: \.isWhitespace).lowercased()
     let regex = Regex {
-      OneOrMore("0"..."9")
+      OneOrMore(.digit)
     }
     value.replace(regex, with: "")
 

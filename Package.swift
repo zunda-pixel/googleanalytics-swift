@@ -21,6 +21,7 @@ let package = Package(
     .package(url: "https://github.com/apple/swift-crypto", from: "4.0.0"),
     .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
     .package(url: "https://github.com/swift-standards/swift-iso-3166.git", from: "0.2.0"),
+    .package(url: "https://github.com/swift-standards/swift-iso-639.git", from: "0.2.0"),
     .package(url: "https://github.com/gohanlon/swift-memberwise-init-macro.git", from: "0.5.2"),
   ],
   targets: [
@@ -34,6 +35,7 @@ let package = Package(
         .product(name: "Crypto", package: "swift-crypto"),
         .product(name: "Algorithms", package: "swift-algorithms"),
         .product(name: "ISO 3166", package: "swift-iso-3166"),
+        .product(name: "ISO 639", package: "swift-iso-639"),
         .product(name: "MemberwiseInit", package: "swift-memberwise-init-macro"),
       ]
     ),
