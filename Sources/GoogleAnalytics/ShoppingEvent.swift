@@ -1,7 +1,7 @@
 import Foundation
 import MemberwiseInit
 
-extension GoogleAnalytics {
+extension Event {
   /// Add Payment Info event.
   ///
   /// This event signifies that a user has submitted their payment information.
@@ -16,7 +16,7 @@ extension GoogleAnalytics {
   ///   ]
   /// )
   /// ```
-  public func addPaymentInfo(
+  public static func addPaymentInfo(
     coupon: String? = nil,
     paymentType: String? = nil,
     price: Price? = nil,
@@ -24,8 +24,8 @@ extension GoogleAnalytics {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == AddPaymentInfoParameters {
+    Event(
       name: "add_payment_info",
       timestamp: timestamp,
       parameters: AddPaymentInfoParameters(
@@ -37,21 +37,19 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-
-    try await log(for: event)
   }
 }
 
 @MemberwiseInit
-struct AddPaymentInfoParameters: Encodable {
-  var coupon: String?
-  var paymentType: String?
-  var price: Price?
-  var items: [Item]
-  var sessionId: String?
-  var engagementTime: TimeInterval?
+public struct AddPaymentInfoParameters: Encodable {
+  public var coupon: String?
+  public var paymentType: String?
+  public var price: Price?
+  public var items: [Item]
+  public var sessionId: String?
+  public var engagementTime: TimeInterval?
 
-  enum CodingKeys: String, CodingKey {
+  private enum CodingKeys: String, CodingKey {
     case coupon
     case paymentType = "payment_type"
     case currency
@@ -61,7 +59,7 @@ struct AddPaymentInfoParameters: Encodable {
     case engagementTime = "engagement_time_msec"
   }
 
-  func encode(to encoder: any Encoder) throws {
+  public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(self.coupon, forKey: .coupon)
     try container.encodeIfPresent(self.paymentType, forKey: .paymentType)
@@ -76,11 +74,11 @@ struct AddPaymentInfoParameters: Encodable {
   }
 }
 
-extension GoogleAnalytics {
+extension Event {
   /// Add Shipping Info event.
   ///
   /// This event signifies that a user has submitted their shipping information.
-  public func addShippingInfo(
+  public static func addShippingInfo(
     coupon: String? = nil,
     shippingTier: String? = nil,
     price: Price? = nil,
@@ -88,8 +86,8 @@ extension GoogleAnalytics {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == AddShippingInfoParameters {
+    Event(
       name: "add_shipping_info",
       timestamp: timestamp,
       parameters: AddShippingInfoParameters(
@@ -101,21 +99,19 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-
-    try await log(for: event)
   }
 }
 
 @MemberwiseInit
-struct AddShippingInfoParameters: Encodable {
-  var coupon: String?
-  var shippingTier: String?
-  var price: Price?
-  var items: [Item]
-  var sessionId: String?
-  var engagementTime: TimeInterval?
+public struct AddShippingInfoParameters: Encodable {
+  public var coupon: String?
+  public var shippingTier: String?
+  public var price: Price?
+  public var items: [Item]
+  public var sessionId: String?
+  public var engagementTime: TimeInterval?
 
-  enum CodingKeys: String, CodingKey {
+  private enum CodingKeys: String, CodingKey {
     case coupon
     case shippingTier = "shipping_tier"
     case currency
@@ -125,7 +121,7 @@ struct AddShippingInfoParameters: Encodable {
     case engagementTime = "engagement_time_msec"
   }
 
-  func encode(to encoder: any Encoder) throws {
+  public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(self.coupon, forKey: .coupon)
     try container.encodeIfPresent(self.shippingTier, forKey: .shippingTier)
@@ -140,7 +136,7 @@ struct AddShippingInfoParameters: Encodable {
   }
 }
 
-extension GoogleAnalytics {
+extension Event {
   /// E-Commerce Add To Cart event.
   ///
   /// This event signifies that an item(s) was added to a cart for purchase.
@@ -154,14 +150,14 @@ extension GoogleAnalytics {
   ///   price: Price(currency: .usd, value: 39.98)
   /// )
   /// ```
-  public func addToCart(
+  public static func addToCart(
     items: [Item],
     price: Price? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == CartItemParameters {
+    Event(
       name: "add_to_cart",
       timestamp: timestamp,
       parameters: CartItemParameters(
@@ -171,18 +167,17 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    try await log(for: event)
   }
 }
 
 @MemberwiseInit
-struct CartItemParameters: Encodable {
-  var items: [Item]
-  var price: Price?
-  var sessionId: String?
-  var engagementTime: TimeInterval?
+public struct CartItemParameters: Encodable {
+  public var items: [Item]
+  public var price: Price?
+  public var sessionId: String?
+  public var engagementTime: TimeInterval?
 
-  enum CodingKeys: String, CodingKey {
+  private enum CodingKeys: String, CodingKey {
     case items
     case currency
     case value
@@ -190,7 +185,7 @@ struct CartItemParameters: Encodable {
     case engagementTime = "engagement_time_msec"
   }
 
-  func encode(to encoder: any Encoder) throws {
+  public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.items, forKey: .items)
     try container.encodeIfPresent(self.price?.currency.rawValue.uppercased(), forKey: .currency)
@@ -203,7 +198,7 @@ struct CartItemParameters: Encodable {
   }
 }
 
-extension GoogleAnalytics {
+extension Event {
 
   /// E-Commerce Add To Wishlist event.
   ///
@@ -218,14 +213,14 @@ extension GoogleAnalytics {
   ///   price: Price(currency: .usd, value: 39.98)
   /// )
   /// ```
-  public func addToWithlist(
+  public static func addToWithlist(
     items: [Item],
     price: Price? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == CartItemParameters {
+    Event(
       name: "add_to_wishlist",
       timestamp: timestamp,
       parameters: CartItemParameters(
@@ -235,24 +230,23 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    try await log(for: event)
   }
 }
 
-extension GoogleAnalytics {
+extension Event {
   /// E-Commerce Begin Checkout event.
   ///
   /// This event signifies that a user has begun the process of checking out.
   /// Add this event to a funnel with your purchase event to gauge the effectiveness of your checkout process.
-  public func beginCheckout(
+  public static func beginCheckout(
     items: [Item],
     coupon: String? = nil,
     price: Price? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == BeginCheckoutParameters {
+    Event(
       name: "begin_checkout",
       timestamp: timestamp,
       parameters: BeginCheckoutParameters(
@@ -263,18 +257,17 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    try await log(for: event)
   }
 }
 
-struct BeginCheckoutParameters: Encodable {
-  var items: [Item]
-  var coupon: String?
-  var price: Price?
-  var sessionId: String?
-  var engagementTime: TimeInterval?
+public struct BeginCheckoutParameters: Encodable {
+  public var items: [Item]
+  public var coupon: String?
+  public var price: Price?
+  public var sessionId: String?
+  public var engagementTime: TimeInterval?
 
-  enum CodingKeys: String, CodingKey {
+  private enum CodingKeys: String, CodingKey {
     case items
     case coupon
     case currency
@@ -283,7 +276,7 @@ struct BeginCheckoutParameters: Encodable {
     case engagementTime = "engagement_time_msec"
   }
 
-  func encode(to encoder: any Encoder) throws {
+  public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.items, forKey: .items)
     try container.encodeIfPresent(self.coupon, forKey: .coupon)
@@ -298,17 +291,17 @@ struct BeginCheckoutParameters: Encodable {
 }
 
 @MemberwiseInit()
-struct PurchaseParameters: Encodable {
-  var transactionId: String?
-  var coupon: String?
-  var tax: Double?
-  var price: Price?
-  var shipping: Double?
-  var items: [Item]
-  var sessionId: String?
-  var engagementTime: TimeInterval?
+public struct PurchaseParameters: Encodable {
+  public var transactionId: String?
+  public var coupon: String?
+  public var tax: Double?
+  public var price: Price?
+  public var shipping: Double?
+  public var items: [Item]
+  public var sessionId: String?
+  public var engagementTime: TimeInterval?
 
-  enum CodingKeys: String, CodingKey {
+  private enum CodingKeys: String, CodingKey {
     case transactionId = "transaction_id"
     case coupon
     case tax
@@ -320,7 +313,7 @@ struct PurchaseParameters: Encodable {
     case engagementTime = "engagement_time_msec"
   }
 
-  func encode(to encoder: any Encoder) throws {
+  public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(self.transactionId, forKey: .transactionId)
     try container.encodeIfPresent(self.coupon, forKey: .coupon)
@@ -337,11 +330,11 @@ struct PurchaseParameters: Encodable {
   }
 }
 
-extension GoogleAnalytics {
+extension Event {
   /// E-Commerce Purchase event.
   ///
   /// This event signifies that an item(s) was purchased by a user.
-  public func purchase(
+  public static func purchase(
     transactionId: String? = nil,
     coupon: String? = nil,
     tax: Double? = nil,
@@ -351,8 +344,8 @@ extension GoogleAnalytics {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == PurchaseParameters {
+    Event(
       name: "purchase",
       timestamp: timestamp,
       parameters: PurchaseParameters(
@@ -366,13 +359,12 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    try await log(for: event)
   }
 
   /// E-Commerce Refund event.
   ///
   /// This event signifies that a refund was issued.
-  public func refund(
+  public static func refund(
     transactionId: String? = nil,
     coupon: String? = nil,
     tax: Double? = nil,
@@ -382,8 +374,8 @@ extension GoogleAnalytics {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == PurchaseParameters {
+    Event(
       name: "refund",
       timestamp: timestamp,
       parameters: PurchaseParameters(
@@ -397,20 +389,19 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    try await log(for: event)
   }
 
   /// E-Commerce Remove from Cart event.
   ///
   /// This event signifies that an item(s) was removed from a cart.
-  public func removeFromCart(
+  public static func removeFromCart(
     items: [Item],
     price: Price? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == CartItemParameters {
+    Event(
       name: "remove_from_cart",
       timestamp: timestamp,
       parameters: CartItemParameters(
@@ -420,21 +411,20 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    try await log(for: event)
   }
 
   /// E-commerce View Cart event.
   ///
   /// This event signifies that a user has viewed their cart.
   /// Use this to analyze your purchase funnel.
-  public func viewCart(
+  public static func viewCart(
     items: [Item],
     price: Price? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == CartItemParameters {
+    Event(
       name: "view_cart",
       timestamp: timestamp,
       parameters: CartItemParameters(
@@ -444,6 +434,5 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    try await log(for: event)
   }
 }

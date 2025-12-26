@@ -1,15 +1,15 @@
 import Foundation
 import MemberwiseInit
 
-@MemberwiseInit
-struct ViewPromotionParameters: Encodable {
-  var id: String?
-  var name: String?
-  var creativeName: String?
-  var creativeSlot: String?
-  var items: [Item]
-  var sessionId: String?
-  var engagementTime: TimeInterval?
+@MemberwiseInit(.public)
+public struct ViewPromotionParameters: Encodable {
+  public var id: String?
+  public var name: String?
+  public var creativeName: String?
+  public var creativeSlot: String?
+  public var items: [Item]
+  public var sessionId: String?
+  public var engagementTime: TimeInterval?
 
   private enum CodingKeys: String, CodingKey {
     case id = "promotion_id"
@@ -21,7 +21,7 @@ struct ViewPromotionParameters: Encodable {
     case engagementTime = "engagement_time"
   }
 
-  func encode(to encoder: any Encoder) throws {
+  public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(id, forKey: .id)
     try container.encodeIfPresent(name, forKey: .name)
@@ -36,12 +36,12 @@ struct ViewPromotionParameters: Encodable {
   }
 }
 
-extension GoogleAnalytics {
+extension Event {
   /// View Promotion event.
   ///
   /// This event signifies that a promotion was shown to a user.
   /// Add this event to a funnel with the addToCart and purchase to gauge your conversion process.
-  public func viewPromotion(
+  public static func viewPromotion(
     id promotionId: String? = nil,
     name promotionName: String? = nil,
     creativeName: String? = nil,
@@ -50,8 +50,8 @@ extension GoogleAnalytics {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Event where Parameters == ViewPromotionParameters {
+    Event(
       name: "view_promotion",
       timestamp: timestamp,
       parameters: ViewPromotionParameters(
@@ -64,16 +64,14 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-
-    try await log(for: event)
   }
 }
 
-@MemberwiseInit
-struct GenerateLeadParameters: Encodable {
-  var price: Price?
-  var sessionId: String?
-  var engagementTime: TimeInterval?
+@MemberwiseInit(.public)
+public struct GenerateLeadParameters: Encodable {
+  public var price: Price?
+  public var sessionId: String?
+  public var engagementTime: TimeInterval?
 
   private enum CodingKeys: String, CodingKey {
     case currency
@@ -82,7 +80,7 @@ struct GenerateLeadParameters: Encodable {
     case engagementTime = "engagement_time_msec"
   }
 
-  func encode(to encoder: any Encoder) throws {
+  public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(price?.value, forKey: .value)
@@ -94,17 +92,17 @@ struct GenerateLeadParameters: Encodable {
   }
 }
 
-extension GoogleAnalytics {
+extension Event {
   /// Generate Lead event.
   ///
   /// Log this event when a lead has been generated in the app to understand the efficacy of your install and re-engagement campaigns.
-  public func generateLead(
+  public static func generateLead(
     price: Price? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Event where Parameters == GenerateLeadParameters {
+    Event(
       name: "generate_lead",
       timestamp: timestamp,
       parameters: GenerateLeadParameters(
@@ -113,17 +111,15 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-
-    try await log(for: event)
   }
 }
 
-extension GoogleAnalytics {
+extension Event {
   /// Campaign Detail event.
   ///
   /// Log this event to supply the referral details of a re-engagement campaign.
   /// Note: you must supply at least one of the required parameters source, medium or campaign.
-  public func campaignDetails(
+  public static func campaignDetails(
     source: String?,
     medium: String?,
     campaign: String?,
@@ -138,8 +134,8 @@ extension GoogleAnalytics {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Event where Parameters == [String: String?] {
+    Event(
       name: "campaign_details",
       timestamp: timestamp,
       parameters: [
@@ -158,7 +154,5 @@ extension GoogleAnalytics {
         "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
       ]
     )
-
-    try await log(for: event)
   }
 }

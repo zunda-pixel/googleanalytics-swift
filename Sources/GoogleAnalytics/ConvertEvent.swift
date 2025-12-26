@@ -2,10 +2,10 @@ import Foundation
 import MemberwiseInit
 
 @MemberwiseInit
-struct PriceParameters: Encodable {
-  var price: Price?
-  var sessionId: String?
-  var engagementTime: TimeInterval?
+public struct PriceParameters: Encodable {
+  public var price: Price?
+  public var sessionId: String?
+  public var engagementTime: TimeInterval?
 
   private enum CodingKeys: String, CodingKey {
     case currency
@@ -14,7 +14,7 @@ struct PriceParameters: Encodable {
     case engagementTime = "engagement_time_msec"
   }
 
-  func encode(to encoder: any Encoder) throws {
+  public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encode(self.price?.value, forKey: .value)
@@ -27,11 +27,11 @@ struct PriceParameters: Encodable {
 }
 
 @MemberwiseInit
-struct PriceReasonParameters: Encodable {
-  var price: Price?
-  var reason: String?
-  var sessionId: String?
-  var engagementTime: TimeInterval?
+public struct PriceReasonParameters: Encodable {
+  public var price: Price?
+  public var reason: String?
+  public var sessionId: String?
+  public var engagementTime: TimeInterval?
 
   private enum CodingKeys: String, CodingKey {
     case currency
@@ -41,7 +41,7 @@ struct PriceReasonParameters: Encodable {
     case engagementTime = "engagement_time_msec"
   }
 
-  func encode(to encoder: any Encoder) throws {
+  public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encode(self.price?.value, forKey: .value)
@@ -54,17 +54,17 @@ struct PriceReasonParameters: Encodable {
   }
 }
 
-extension GoogleAnalytics {
+extension Event {
   /// Close Convert  Lead Event.
   ///
   /// This event measures when a lead has been converted and closed (for example, through a purchase).
-  public func closeConvertLead(
+  public static func closeConvertLead(
     price: Price? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == PriceParameters {
+    Event(
       name: "close_convert_lead",
       timestamp: timestamp,
       parameters: PriceParameters(
@@ -73,20 +73,19 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    try await log(for: event)
   }
 
   /// Close Unconvert Lead Event.
   ///
   /// This event measures when a user is marked as not becoming a converted lead, along with the reason.
-  public func closeUnConvertLead(
+  public static func closeUnConvertLead(
     price: Price? = nil,
     reason: String? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == PriceReasonParameters {
+    Event(
       name: "close_convert_lead",
       timestamp: timestamp,
       parameters: PriceReasonParameters(
@@ -96,20 +95,19 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    try await log(for: event)
   }
 
   /// Disqualify Lead  Event.
   ///
   /// This event measures when a lead is generated.
-  public func disqualifyLead(
+  public static func disqualifyLead(
     price: Price? = nil,
     reason: String? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == PriceReasonParameters {
+    Event(
       name: "disqualify_lead",
       timestamp: timestamp,
       parameters: PriceReasonParameters(
@@ -119,19 +117,18 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    try await log(for: event)
   }
 
   /// Qualify Lead  Event.
   ///
   /// This event measures when a user is marked as meeting the criteria to become a qualified lead.
-  public func qualifyLead(
+  public static func qualifyLead(
     price: Price? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == PriceParameters {
+    Event(
       name: "qualify_lead",
       timestamp: timestamp,
       parameters: PriceParameters(
@@ -140,20 +137,19 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    try await log(for: event)
   }
 
   /// Working Lead  Event.
   ///
   /// This event measures when a user contacts or is contacted by a representative.
-  public func workingLead(
+  public static func workingLead(
     price: Price? = nil,
     leadStatus: String? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Self where Parameters == WorkingLeadParameters {
+    Event(
       name: "working_lead",
       timestamp: timestamp,
       parameters: WorkingLeadParameters(
@@ -163,18 +159,17 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-    try await log(for: event)
   }
 }
 
 @MemberwiseInit
-struct WorkingLeadParameters: Encodable {
-  var price: Price?
-  var leadStatus: String?
-  var sessionId: String?
-  var engagementTime: TimeInterval?
+public struct WorkingLeadParameters: Encodable {
+  public var price: Price?
+  public var leadStatus: String?
+  public var sessionId: String?
+  public var engagementTime: TimeInterval?
 
-  enum CodingKeys: String, CodingKey {
+  private enum CodingKeys: String, CodingKey {
     case currency
     case value
     case leadStatus = "lead_status"
@@ -182,7 +177,7 @@ struct WorkingLeadParameters: Encodable {
     case engagementTime = "engagement_time_msec"
   }
 
-  func encode(to encoder: any Encoder) throws {
+  public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encode(self.price?.value, forKey: .value)
