@@ -1,21 +1,21 @@
 import Foundation
 import MemberwiseInit
 
-extension GoogleAnalytics {
+extension Event {
   /// Ad Impression event.
   ///
   /// This event signifies when a user sees an ad impression.
-  public func adImpression(
-    platform: String? = nil,
-    format: String? = nil,
-    source: String? = nil,
-    unitName: String? = nil,
-    price: Price? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+  public static func adImpression(
+    platform: String,
+    format: String,
+    source: String,
+    unitName: String,
+    price: Price,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
-  ) async throws {
-    let event = Event(
+  ) -> Event {
+    Event(
       name: "ad_impression",
       timestamp: timestamp,
       parameters: AdvertiseEventParameters(
@@ -28,20 +28,18 @@ extension GoogleAnalytics {
         engagementTime: engagementTime
       )
     )
-
-    try await log(for: event)
   }
 }
 
 @MemberwiseInit
-struct AdvertiseEventParameters: Encodable {
-  var platform: String?
-  var format: String?
-  var source: String?
-  var unitName: String?
-  var price: Price?
-  var sessionId: String?
-  var engagementTime: TimeInterval?
+public struct AdvertiseEventParameters: Encodable {
+  public var platform: String
+  public var format: String
+  public var source: String
+  public var unitName: String
+  public var price: Price
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case platform = "ad_platform"
@@ -54,17 +52,17 @@ struct AdvertiseEventParameters: Encodable {
     case engagementTime = "engagement_time_msec"
   }
 
-  func encode(to encoder: any Encoder) throws {
+  public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.platform, forKey: .platform)
     try container.encode(self.format, forKey: .format)
     try container.encode(self.source, forKey: .source)
     try container.encode(self.unitName, forKey: .unitName)
-    try container.encode(self.price?.currency.rawValue.uppercased(), forKey: .currency)
-    try container.encode(self.price?.value, forKey: .value)
+    try container.encode(self.price.currency.rawValue.uppercased(), forKey: .currency)
+    try container.encode(self.price.value, forKey: .value)
     try container.encode(self.sessionId, forKey: .sessionId)
     try container.encode(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      (self.engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }

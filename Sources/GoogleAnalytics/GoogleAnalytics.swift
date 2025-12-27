@@ -3,8 +3,6 @@ import HTTPClient
 import HTTPTypes
 import MemberwiseInit
 
-extension GoogleAnalytics: Sendable where HTTPClient: Sendable, UserProperties: Sendable {}
-
 @MemberwiseInit(.public)
 public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: Encodable> {
   public var httpClient: HTTPClient
@@ -53,14 +51,14 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     self.validationBehavior = validationBehavior
   }
 
-  public func log<Paramters: Encodable>(
-    for event: Event<Paramters>
+  public func log(
+    for event: Event
   ) async throws {
-    try await log(for: [event])
+    try await self.log(for: [event])
   }
 
-  public func log<Paramters: Encodable>(
-    for events: [Event<Paramters>]
+  public func log(
+    for events: [Event]
   ) async throws {
     let payload = Payload(
       appInstanceId: appInstanceId,
@@ -109,8 +107,8 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     }
   }
 
-  public func validatePayload<Paramters: Encodable>(
-    for events: [Event<Paramters>]
+  public func validatePayload(
+    for events: [Event]
   ) async throws -> [ValidationResponse.Message] {
     let payload = Payload(
       appInstanceId: appInstanceId,
@@ -178,3 +176,5 @@ public struct ValidationResponse: Decodable {
     public var validationCode: String
   }
 }
+
+extension GoogleAnalytics: Sendable where HTTPClient: Sendable, UserProperties: Sendable {}
