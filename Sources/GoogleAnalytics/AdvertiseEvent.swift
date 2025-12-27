@@ -14,7 +14,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == AdvertiseEventParameters {
+  ) -> Event {
     Event(
       name: "ad_impression",
       timestamp: timestamp,

@@ -63,7 +63,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == PriceParameters {
+  ) -> Self {
     Event(
       name: "close_convert_lead",
       timestamp: timestamp,
@@ -84,7 +84,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == PriceReasonParameters {
+  ) -> Self {
     Event(
       name: "close_convert_lead",
       timestamp: timestamp,
@@ -106,7 +106,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == PriceReasonParameters {
+  ) -> Self {
     Event(
       name: "disqualify_lead",
       timestamp: timestamp,
@@ -127,7 +127,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == PriceParameters {
+  ) -> Self {
     Event(
       name: "qualify_lead",
       timestamp: timestamp,
@@ -148,7 +148,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == WorkingLeadParameters {
+  ) -> Self {
     Event(
       name: "working_lead",
       timestamp: timestamp,

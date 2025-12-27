@@ -10,7 +10,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == [String: String?] {
+  ) -> Event {
     Event(
       name: "login",
       timestamp: timestamp,
@@ -32,7 +32,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == [String: String?] {
+  ) -> Self {
     Event(
       name: "sign_up",
       timestamp: timestamp,
@@ -49,7 +49,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == [String: String?] {
+  ) -> Self {
     Event(
       name: "app_open",
       timestamp: timestamp,
@@ -68,7 +68,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == [String: String?]{
+  ) -> Event {
     Event(
       name: "app_open",
       timestamp: timestamp,
@@ -90,7 +90,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == [String: String?] {
+  ) -> Self {
     Event(
       name: "screen_view",
       timestamp: timestamp,
@@ -112,7 +112,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == [String: String?] {
+  ) -> Self {
     Event(
       name: "search",
       timestamp: timestamp,
@@ -134,7 +134,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == [String: String?] {
+  ) -> Event {
     Event(
       name: "select_content",
       timestamp: timestamp,
@@ -159,7 +159,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == ItemListParameters {
+  ) -> Self {
     Event(
       name: "select_item",
       timestamp: timestamp,
@@ -186,7 +186,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == PromotionParameters {
+  ) -> Event {
     Event(
       name: "select_promotion",
       timestamp: timestamp,
@@ -212,7 +212,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == [String: String?] {
+  ) -> Event {
     Event(
       name: "share",
       timestamp: timestamp,
@@ -234,7 +234,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == [String: String?]  {
+  ) -> Event {
     Event(
       name: "tutorial_begin",
       timestamp: timestamp,
@@ -253,7 +253,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == [String: String?]  {
+  ) -> Event {
     Event(
       name: "tutorial_complete",
       timestamp: timestamp,
@@ -275,7 +275,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == ViewItemParameters {
+  ) -> Event {
     Event(
       name: "view_item",
       timestamp: timestamp,
@@ -298,7 +298,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == ItemListParameters {
+  ) -> Event {
     Event(
       name: "view_item_list",
       timestamp: timestamp,
@@ -320,7 +320,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == [String: String?]  {
+  ) -> Event {
     Event(
       name: "view_search_results",
       timestamp: timestamp,
@@ -341,7 +341,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == [String: String?] {
+  ) -> Event {
     Event(
       name: "join_group",
       timestamp: timestamp,

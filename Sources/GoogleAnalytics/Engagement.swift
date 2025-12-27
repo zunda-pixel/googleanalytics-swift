@@ -6,7 +6,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == [String: String?] {
+  ) -> Self {
     Event(
       name: "user_engagement",
       timestamp: timestamp,

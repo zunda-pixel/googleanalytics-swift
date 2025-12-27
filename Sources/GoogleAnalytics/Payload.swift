@@ -2,18 +2,18 @@ import Foundation
 import MemberwiseInit
 
 @MemberwiseInit(.public)
-struct Payload<Paramters: Encodable, UserProperties: Encodable>: Encodable {
+struct Payload: Encodable {
   public var appInstanceId: String
   public var userId: String?
   public var timestamp: Date?
-  public var userProperties: UserProperties?
+  public var userProperties: (any Encodable)?
   public var userData: UserData?
   public var consent: Consent?
   public var userLocation: UserLocation?
   public var ipOverride: String?
   public var device: Device?
   public var validationBehavior: ValidationBehavior = .relaxed
-  public var events: [Event<Paramters>]
+  public var events: [Event]
 
   private enum CodingKeys: String, CodingKey {
     case appInstanceId = "app_instance_id"
@@ -39,7 +39,9 @@ struct Payload<Paramters: Encodable, UserProperties: Encodable>: Encodable {
     try container.encodeIfPresent(userId, forKey: .userId)
     try container.encodeIfPresent(userData, forKey: .userData)
     try container.encodeIfPresent(userLocation, forKey: .userLocation)
-    try container.encodeIfPresent(userProperties, forKey: .userProperties)
+    if let userProperties {
+      try container.encodeIfPresent(userProperties, forKey: .userProperties)
+    }
     try container.encodeIfPresent(consent, forKey: .consent)
     try container.encode(events, forKey: .events)
   }

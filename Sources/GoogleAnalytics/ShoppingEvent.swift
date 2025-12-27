@@ -24,7 +24,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == AddPaymentInfoParameters {
+  ) -> Self {
     Event(
       name: "add_payment_info",
       timestamp: timestamp,
@@ -86,7 +86,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == AddShippingInfoParameters {
+  ) -> Self {
     Event(
       name: "add_shipping_info",
       timestamp: timestamp,
@@ -156,7 +156,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == CartItemParameters {
+  ) -> Self {
     Event(
       name: "add_to_cart",
       timestamp: timestamp,
@@ -219,7 +219,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == CartItemParameters {
+  ) -> Self {
     Event(
       name: "add_to_wishlist",
       timestamp: timestamp,
@@ -245,7 +245,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == BeginCheckoutParameters {
+  ) -> Self {
     Event(
       name: "begin_checkout",
       timestamp: timestamp,
@@ -344,7 +344,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == PurchaseParameters {
+  ) -> Self {
     Event(
       name: "purchase",
       timestamp: timestamp,
@@ -374,7 +374,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == PurchaseParameters {
+  ) -> Self {
     Event(
       name: "refund",
       timestamp: timestamp,
@@ -400,7 +400,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == CartItemParameters {
+  ) -> Self {
     Event(
       name: "remove_from_cart",
       timestamp: timestamp,
@@ -423,7 +423,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == CartItemParameters {
+  ) -> Self {
     Event(
       name: "view_cart",
       timestamp: timestamp,

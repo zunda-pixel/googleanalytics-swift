@@ -50,7 +50,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == ViewPromotionParameters {
+  ) -> Event {
     Event(
       name: "view_promotion",
       timestamp: timestamp,
@@ -101,7 +101,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == GenerateLeadParameters {
+  ) -> Event {
     Event(
       name: "generate_lead",
       timestamp: timestamp,
@@ -134,7 +134,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Event where Parameters == [String: String?] {
+  ) -> Event {
     Event(
       name: "campaign_details",
       timestamp: timestamp,

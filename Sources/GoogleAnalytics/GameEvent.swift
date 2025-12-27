@@ -10,7 +10,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == [String: String?] {
+  ) -> Self {
     Event(
       name: "level_start",
       timestamp: timestamp,
@@ -32,7 +32,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == LevelUpParametes {
+  ) -> Self {
     Event(
       name: "level_up",
       timestamp: timestamp,
@@ -54,7 +54,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == LevelEndParametes {
+  ) -> Self {
     Event(
       name: "level_end",
       timestamp: timestamp,
@@ -78,7 +78,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == PostScoreParameters {
+  ) -> Self {
     Event(
       name: "post_score",
       timestamp: timestamp,
@@ -101,7 +101,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == [String: String?] {
+  ) -> Self {
     Event(
       name: "unlock_achievement",
       timestamp: timestamp,
@@ -120,7 +120,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == EarnVirtualCurrencyParameters {
+  ) -> Self {
     Event(
       name: "earn_virtual_currency",
       timestamp: timestamp,
@@ -143,7 +143,7 @@ extension Event {
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
-  ) -> Self where Parameters == SpendVirtualCurrencyParameters {
+  ) -> Self {
     Event(
       name: "spend_virtual_currency",
       timestamp: timestamp,
@@ -186,7 +186,7 @@ public struct EarnVirtualCurrencyParameters: Encodable {
 
 @MemberwiseInit(.public)
 public struct SpendVirtualCurrencyParameters: Encodable {
-  public  var itemName: String
+  public var itemName: String
   public var currencyName: String
   public var value: Double
   public var sessionId: String?
@@ -270,7 +270,7 @@ public struct LevelUpParametes: Encodable {
 
 @MemberwiseInit(.public)
 public struct LevelEndParametes: Encodable {
-  public  var levelName: String
+  public var levelName: String
   public var success: Bool
   /// TODO - should be a int? 0 or 1
   public var sessionId: String?

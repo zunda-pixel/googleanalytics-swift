@@ -2,10 +2,10 @@ import Foundation
 import MemberwiseInit
 
 @MemberwiseInit(.public)
-public struct Event<Parameters: Encodable>: Encodable {
+public struct Event: Encodable {
   public var name: String
   public var timestamp: Date?
-  public var parameters: Parameters
+  public var parameters: any Encodable
 
   private enum CodingKeys: String, CodingKey {
     case name
