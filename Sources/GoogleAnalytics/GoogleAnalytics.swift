@@ -11,6 +11,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   public var apiSecret: String
   public var appInstanceId: String
   public var measurementId: String?
+  public var clientId: String?
   public var userId: String?
   public var userProperties: UserProperties?
   public var userData: UserData?
@@ -27,6 +28,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     apiSecret: String,
     appInstanceId: String,
     measurementId: String?,
+    clientId: String?,
     userId: String?,
     userData: UserData?,
     consent: Consent?,
@@ -41,6 +43,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     self.apiSecret = apiSecret
     self.measurementId = measurementId
     self.appInstanceId = appInstanceId
+    self.clientId = clientId
     self.userId = userId
     self.userProperties = nil
     self.userData = userData
@@ -113,7 +116,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   ) async throws -> [ValidationResponse.Message] {
     let payload = Payload(
       appInstanceId: appInstanceId,
-      clowntId: clientId,
+      clientId: clientId,
       userId: userId,
       timestamp: .now,
       userProperties: userProperties,
