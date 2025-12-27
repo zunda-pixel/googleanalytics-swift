@@ -4,7 +4,7 @@ import MemberwiseInit
 @MemberwiseInit(.public)
 struct Payload: Encodable {
   public var appInstanceId: String
-  public var clienId: String?
+  public var clientId: String?
   public var userId: String?
   public var timestamp: Date?
   public var userProperties: (any Encodable)?
