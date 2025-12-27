@@ -176,7 +176,7 @@ public struct ValidationResponse: Decodable {
   }
 
   public struct Message: Decodable {
-    public var fieldPath: String
+    public var fieldPath: String?
     public var description: String
     public var validationCode: String
   }
