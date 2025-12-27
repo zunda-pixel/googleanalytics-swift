@@ -33,7 +33,7 @@ struct Payload: Encodable {
 
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
-    try container.encode(appInstanceId, forKey: .appInstanceId)
+    // try container.encode(appInstanceId, forKey: .appInstanceId)
     try container.encodeIfPresent(
       timestamp.map { UInt($0.timeIntervalSince1970 * 1_000_000) },
       forKey: .timestamp
