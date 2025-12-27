@@ -4,6 +4,7 @@ import MemberwiseInit
 @MemberwiseInit(.public)
 struct Payload: Encodable {
   public var appInstanceId: String
+  public var clienId: String?
   public var userId: String?
   public var timestamp: Date?
   public var userProperties: (any Encodable)?
@@ -17,6 +18,7 @@ struct Payload: Encodable {
 
   private enum CodingKeys: String, CodingKey {
     case appInstanceId = "app_instance_id"
+    case clientId = "client_id"
     case userId = "user_id"
     case timestamp = "timestamp_micros"
     case userProperties = "user_properties"
@@ -36,6 +38,7 @@ struct Payload: Encodable {
       timestamp.map { UInt($0.timeIntervalSince1970 * 1_000_000) },
       forKey: .timestamp
     )
+    try container.encodeIfPresent(clientId, forKey: .clientId)
     try container.encodeIfPresent(userId, forKey: .userId)
     try container.encodeIfPresent(userData, forKey: .userData)
     try container.encodeIfPresent(userLocation, forKey: .userLocation)
