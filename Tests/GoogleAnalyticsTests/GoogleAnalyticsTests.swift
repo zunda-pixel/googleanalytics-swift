@@ -52,8 +52,7 @@ struct GoogleAnalyticsTests {
       )
     )
   )
-  
-  
+
   func allEvents(sessionId: String) -> [Event] {
     [
       Event.adImpression(
@@ -81,26 +80,80 @@ struct GoogleAnalyticsTests {
       Event.sessionStart(sessionId: sessionId, engagementTime: 100000),
       Event.sessionStart(sessionId: sessionId, engagementTime: 100000, timestamp: .now),
       Event.appOpen(sessionId: sessionId, engagementTime: 10000),
-      Event.screenView(name: "ScreenName", className: "ClassName", sessionId: sessionId, engagementTime: 10000),
-      Event.screenView(name: "ScreenName", className: "ClassName", sessionId: sessionId, engagementTime: 10000, timestamp: .now),
+      Event.screenView(
+        name: "ScreenName",
+        className: "ClassName",
+        sessionId: sessionId,
+        engagementTime: 10000
+      ),
+      Event.screenView(
+        name: "ScreenName",
+        className: "ClassName",
+        sessionId: sessionId,
+        engagementTime: 10000,
+        timestamp: .now
+      ),
       Event.search(term: "Term", sessionId: sessionId, engagementTime: 10000),
       Event.search(term: "Term", sessionId: sessionId, engagementTime: 10000, timestamp: .now),
-      Event.selectContent(itemId: "ItemId", contentType: "Book", sessionId: sessionId, engagementTime: 10000),
-      Event.selectContent(itemId: "ItemId", contentType: "Book", sessionId: sessionId, engagementTime: 10000, timestamp: .now),
-      Event.share(method: "Native", itemId: "ItemId", contentType: "ContentType", sessionId: sessionId, engagementTime: 1),
-      Event.share(method: "Native", itemId: "ItemId", contentType: "ContentType", sessionId: sessionId, engagementTime: 1, timestamp: .now),
+      Event.selectContent(
+        itemId: "ItemId",
+        contentType: "Book",
+        sessionId: sessionId,
+        engagementTime: 10000
+      ),
+      Event.selectContent(
+        itemId: "ItemId",
+        contentType: "Book",
+        sessionId: sessionId,
+        engagementTime: 10000,
+        timestamp: .now
+      ),
+      Event.share(
+        method: "Native",
+        itemId: "ItemId",
+        contentType: "ContentType",
+        sessionId: sessionId,
+        engagementTime: 1
+      ),
+      Event.share(
+        method: "Native",
+        itemId: "ItemId",
+        contentType: "ContentType",
+        sessionId: sessionId,
+        engagementTime: 1,
+        timestamp: .now
+      ),
       Event.tutorialBegin(sessionId: sessionId, engagementTime: 10),
       Event.tutorialBegin(sessionId: sessionId, engagementTime: 10, timestamp: .now),
       Event.tutorialComplete(sessionId: sessionId, engagementTime: 100),
       Event.tutorialComplete(sessionId: sessionId, engagementTime: 100, timestamp: .now),
       Event.viewSearchResults(term: "Term", sessionId: sessionId, engagementTime: 100),
-      Event.viewSearchResults(term: "Term", sessionId: sessionId, engagementTime: 100, timestamp: .now),
+      Event.viewSearchResults(
+        term: "Term",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
       Event.joinGroup(id: "GroupID", sessionId: sessionId, engagementTime: 100),
       Event.joinGroup(id: "GroupID", sessionId: sessionId, engagementTime: 100, timestamp: .now),
       Event.levelStart(levelName: "LevelName", sessionId: sessionId, engagementTime: 100),
-      Event.levelStart(levelName: "LevelName", sessionId: sessionId, engagementTime: 100, timestamp: .now),
-      Event.unlockAchievement(achievementId: "AchivementId", sessionId: sessionId, engagementTime: 100),
-      Event.unlockAchievement(achievementId: "AchivementId", sessionId: sessionId, engagementTime: 100, timestamp: .now),
+      Event.levelStart(
+        levelName: "LevelName",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.unlockAchievement(
+        achievementId: "AchivementId",
+        sessionId: sessionId,
+        engagementTime: 100
+      ),
+      Event.unlockAchievement(
+        achievementId: "AchivementId",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
       Event.campaignDetails(
         source: "Source",
         medium: "Medium",
@@ -132,15 +185,20 @@ struct GoogleAnalyticsTests {
         engagementTime: 100,
         timestamp: .now
       ),
-      Event.selectItem(items: [.beer(quantiry: 10)], listId: "ListId", listName: "ListName", sessionId: sessionId, engagementTime: 10000, timestamp: .now),
+      Event.selectItem(
+        items: [.beer(quantiry: 10)],
+        listId: "ListId",
+        listName: "ListName",
+        sessionId: sessionId,
+        engagementTime: 10000,
+        timestamp: .now
+      ),
       Event.selectPromotion(
         id: "PromotionId",
         name: "PromotionName",
         creativeName: "CreativeName",
         creativeSlot: "CreativeSlot",
-        items: [.beer(
-          quantiry: 10
-        )],
+        items: [.beer(quantiry: 10)],
         sessionId: sessionId,
         engagementTime: 10000,
         timestamp: .now
@@ -160,29 +218,96 @@ struct GoogleAnalyticsTests {
         engagementTime: 10,
         timestamp: .now
       ),
-      Event.closeConvertLead(price: Price(currency: .yer, value: 100), sessionId: sessionId, engagementTime: 100, timestamp: .now),
-      Event.closeUnConvertLead(price: Price(currency: .yer, value: 100), reason: "Reason", sessionId: sessionId, engagementTime: 100, timestamp: .now),
-      Event.disqualifyLead(price: Price(currency: .yer, value: 100), reason: "Reason", sessionId: sessionId, engagementTime: 100, timestamp: .now),
-      Event.qualifyLead(price: Price(currency: .yer, value: 100), sessionId: sessionId, engagementTime: 100, timestamp: .now),
-      Event.workingLead(price: Price(currency: .yer, value: 100), leadStatus: "LeadStatus", sessionId: sessionId, engagementTime: 100, timestamp: .now),
-      Event.levelUp(level: 1, character: "Hero", sessionId: sessionId, engagementTime: 100, timestamp: .now),
-      Event.levelEnd(levelName: "LevelName", success: true, sessionId: sessionId, engagementTime: 100, timestamp: .now),
-      Event.postScore(score: 1, level: 1, character: "Hero", sessionId: sessionId, engagementTime: 100, timestamp: .now),
-      Event.earnVirtualCurrency(currencyName: "CurrencyName", value: 123, sessionId: sessionId, engagementTime: 100, timestamp: .now),
-      Event.spendVirtualCurrency(itemName: "ItemName", currencyName: "CurrencyName", value: 123, sessionId: sessionId, engagementTime: 100, timestamp: .now),
+      Event.closeConvertLead(
+        price: Price(currency: .yer, value: 100),
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.closeUnConvertLead(
+        price: Price(currency: .yer, value: 100),
+        reason: "Reason",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.disqualifyLead(
+        price: Price(currency: .yer, value: 100),
+        reason: "Reason",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.qualifyLead(
+        price: Price(currency: .yer, value: 100),
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.workingLead(
+        price: Price(currency: .yer, value: 100),
+        leadStatus: "LeadStatus",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.levelUp(
+        level: 1,
+        character: "Hero",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.levelEnd(
+        levelName: "LevelName",
+        success: true,
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.postScore(
+        score: 1,
+        level: 1,
+        character: "Hero",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.earnVirtualCurrency(
+        currencyName: "CurrencyName",
+        value: 123,
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.spendVirtualCurrency(
+        itemName: "ItemName",
+        currencyName: "CurrencyName",
+        value: 123,
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
       Event.viewPromotion(
         id: "PromotionId",
         name: "PromotionName",
         creativeName: "CreativeName",
         creativeSlot: "CreativeSlot",
-        items: [.beer(
-          quantiry: 10
-        )],
+        items: [
+          .beer(
+            quantiry: 10
+          )
+        ],
         sessionId: sessionId,
         engagementTime: 100,
         timestamp: .now
       ),
-      Event.generateLead(price: Price(currency: .jpy, value: 100), sessionId: sessionId, engagementTime: 100, timestamp: .now),
+      Event.generateLead(
+        price: Price(currency: .jpy, value: 100),
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
       Event.addPaymentInfo(
         coupon: "Coupon",
         paymentType: "PaymentType",
@@ -269,11 +394,11 @@ struct GoogleAnalyticsTests {
     let messages = try await client.validatePayload(
       for: allEvents(sessionId: sessionId)
     )
-   
+
     #expect(messages.isEmpty)
     print(messages)
   }
-  
+
   @Test
   func log() async throws {
     let sessionId = UUID().uuidString
