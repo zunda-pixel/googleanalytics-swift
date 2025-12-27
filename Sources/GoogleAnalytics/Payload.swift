@@ -3,8 +3,7 @@ import MemberwiseInit
 
 @MemberwiseInit(.public)
 struct Payload: Encodable {
-  public var appInstanceId: String
-  public var clientId: String?
+  public var id: ID
   public var userId: String?
   public var timestamp: Date?
   public var userProperties: (any Encodable)?
@@ -33,12 +32,16 @@ struct Payload: Encodable {
 
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
-    // try container.encode(appInstanceId, forKey: .appInstanceId)
     try container.encodeIfPresent(
       timestamp.map { UInt($0.timeIntervalSince1970 * 1_000_000) },
       forKey: .timestamp
     )
-    try container.encodeIfPresent(clientId, forKey: .clientId)
+    switch id {
+    case .appInstanceId(let appInstanceId):
+      try container.encode(appInstanceId, forKey: .appInstanceId)
+    case .clientId(let clientId):
+      try container.encode(clientId, forKey: .clientId)
+    }
     try container.encodeIfPresent(userId, forKey: .userId)
     try container.encodeIfPresent(userData, forKey: .userData)
     try container.encodeIfPresent(userLocation, forKey: .userLocation)
@@ -48,6 +51,11 @@ struct Payload: Encodable {
     try container.encodeIfPresent(consent, forKey: .consent)
     try container.encode(events, forKey: .events)
   }
+}
+
+public enum ID: Hashable, Sendable {
+  case appInstanceId(String)
+  case clientId(String)
 }
 
 public enum ValidationBehavior: String, Sendable, Codable, Hashable {
