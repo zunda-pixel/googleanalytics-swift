@@ -7,8 +7,8 @@ extension Event {
   /// Apps with a login feature can report this event to signify that a user has logged in.
   public static func login(
     method: String,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -17,7 +17,7 @@ extension Event {
       parameters: [
         "method": method,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
@@ -29,8 +29,8 @@ extension Event {
   /// Use this event to understand the different behaviors between logged in and logged out users.
   public static func signUp(
     method: String,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -39,15 +39,15 @@ extension Event {
       parameters: [
         "method": method,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
 
   /// Session Start event.
   public static func sessionStart(
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -55,7 +55,7 @@ extension Event {
       timestamp: timestamp,
       parameters: [
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
@@ -65,8 +65,8 @@ extension Event {
   /// By logging this event when an App becomes active, developers can understand how often users leave and return during the course of a Session.
   /// Although Sessions are automatically reported, this event can provide further clarification around the continuous engagement of app-users.
   public static func appOpen(
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -74,7 +74,7 @@ extension Event {
       timestamp: timestamp,
       parameters: [
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
@@ -85,10 +85,10 @@ extension Event {
   /// Use this when a screen transition occurs.
   /// This event can be logged irrespective of whether automatic screen tracking is enabled.
   public static func screenView(
-    name: String? = nil,
-    className: String? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    name: String,
+    className: String,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -98,7 +98,7 @@ extension Event {
         "screen_name": name,
         "screen_class": className,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
@@ -109,8 +109,8 @@ extension Event {
   /// This event can help you identify the most popular content in your app.
   public static func search(
     term: String,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -119,7 +119,7 @@ extension Event {
       parameters: [
         "search_term": term,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
@@ -131,8 +131,8 @@ extension Event {
   public static func selectContent(
     itemId: String,
     contentType: String,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -142,7 +142,7 @@ extension Event {
         "item_id": itemId,
         "content_type": contentType,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
@@ -209,8 +209,8 @@ extension Event {
     method: String,
     itemId: String,
     contentType: String,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -221,7 +221,7 @@ extension Event {
         "item_id": itemId,
         "content_type": contentType,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
@@ -231,8 +231,8 @@ extension Event {
   /// This event signifies the start of the on-boarding process in your app.
   /// Use this in a funnel with tutorialComplete to understand how many users complete this process and move on to the full app experience.
   public static func tutorialBegin(
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -240,7 +240,7 @@ extension Event {
       timestamp: timestamp,
       parameters: [
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
@@ -250,8 +250,8 @@ extension Event {
   /// Use this event to signify the user's completion of your app's on-boarding process.
   /// Add this to a funnel with tutorialBegin to gauge the completion rate of your on-boarding process.
   public static func tutorialComplete(
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -259,7 +259,7 @@ extension Event {
       timestamp: timestamp,
       parameters: [
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
@@ -317,8 +317,8 @@ extension Event {
   /// Log this event when the user has been presented with the results of a search.
   public static func viewSearchResults(
     term: String,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -327,7 +327,7 @@ extension Event {
       parameters: [
         "search_term": term,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
@@ -338,8 +338,8 @@ extension Event {
   /// Use this event to analyze how popular certain groups or social features are in your app.
   public static func joinGroup(
     id groupId: String,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -348,7 +348,7 @@ extension Event {
       parameters: [
         "group_id": groupId,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
@@ -435,7 +435,7 @@ public struct ItemListParameters: Encodable {
 
   public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
-    try container.encode(items, forKey: .items)
+//    try container.encode(items, forKey: .items)
     try container.encodeIfPresent(listId, forKey: .listId)
     try container.encodeIfPresent(listName, forKey: .listName)
     try container.encodeIfPresent(sessionId, forKey: .sessionId)

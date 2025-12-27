@@ -28,7 +28,7 @@ public struct PriceParameters: Encodable {
 
 @MemberwiseInit
 public struct PriceReasonParameters: Encodable {
-  public var price: Price?
+  public var price: Price
   public var reason: String?
   public var sessionId: String?
   public var engagementTime: TimeInterval?
@@ -43,8 +43,8 @@ public struct PriceReasonParameters: Encodable {
 
   public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
-    try container.encode(self.price?.currency.rawValue.uppercased(), forKey: .currency)
-    try container.encode(self.price?.value, forKey: .value)
+    try container.encode(self.price.currency.rawValue.uppercased(), forKey: .currency)
+    try container.encode(self.price.value, forKey: .value)
     try container.encodeIfPresent(self.reason, forKey: .reason)
     try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
     try container.encodeIfPresent(
@@ -59,7 +59,7 @@ extension Event {
   ///
   /// This event measures when a lead has been converted and closed (for example, through a purchase).
   public static func closeConvertLead(
-    price: Price? = nil,
+    price: Price,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
@@ -79,7 +79,7 @@ extension Event {
   ///
   /// This event measures when a user is marked as not becoming a converted lead, along with the reason.
   public static func closeUnConvertLead(
-    price: Price? = nil,
+    price: Price,
     reason: String? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
@@ -101,7 +101,7 @@ extension Event {
   ///
   /// This event measures when a lead is generated.
   public static func disqualifyLead(
-    price: Price? = nil,
+    price: Price,
     reason: String? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
@@ -143,7 +143,7 @@ extension Event {
   ///
   /// This event measures when a user contacts or is contacted by a representative.
   public static func workingLead(
-    price: Price? = nil,
+    price: Price,
     leadStatus: String? = nil,
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,

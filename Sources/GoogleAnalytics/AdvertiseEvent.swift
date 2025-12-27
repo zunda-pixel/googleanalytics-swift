@@ -6,13 +6,13 @@ extension Event {
   ///
   /// This event signifies when a user sees an ad impression.
   public static func adImpression(
-    platform: String? = nil,
-    format: String? = nil,
-    source: String? = nil,
-    unitName: String? = nil,
-    price: Price? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    platform: String,
+    format: String,
+    source: String,
+    unitName: String,
+    price: Price,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -33,13 +33,13 @@ extension Event {
 
 @MemberwiseInit
 public struct AdvertiseEventParameters: Encodable {
-  public var platform: String?
-  public var format: String?
-  public var source: String?
-  public var unitName: String?
-  public var price: Price?
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var platform: String
+  public var format: String
+  public var source: String
+  public var unitName: String
+  public var price: Price
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case platform = "ad_platform"
@@ -58,11 +58,11 @@ public struct AdvertiseEventParameters: Encodable {
     try container.encode(self.format, forKey: .format)
     try container.encode(self.source, forKey: .source)
     try container.encode(self.unitName, forKey: .unitName)
-    try container.encode(self.price?.currency.rawValue.uppercased(), forKey: .currency)
-    try container.encode(self.price?.value, forKey: .value)
+    try container.encode(self.price.currency.rawValue.uppercased(), forKey: .currency)
+    try container.encode(self.price.value, forKey: .value)
     try container.encode(self.sessionId, forKey: .sessionId)
     try container.encode(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+      (self.engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }

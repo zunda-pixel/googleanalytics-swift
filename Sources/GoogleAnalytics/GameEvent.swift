@@ -7,8 +7,8 @@ extension Event {
   /// Log this event when the user starts a new level.
   public static func levelStart(
     levelName: String,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -17,7 +17,7 @@ extension Event {
       parameters: [
         "level_name": levelName,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }

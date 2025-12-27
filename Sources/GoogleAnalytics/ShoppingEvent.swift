@@ -20,7 +20,7 @@ extension Event {
     coupon: String? = nil,
     paymentType: String? = nil,
     price: Price? = nil,
-    items: [Item],
+    items: [Item] = [],
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil
@@ -82,7 +82,7 @@ extension Event {
     coupon: String? = nil,
     shippingTier: String? = nil,
     price: Price? = nil,
-    items: [Item],
+    items: [Item] = [],
     sessionId: String? = nil,
     engagementTime: TimeInterval? = nil,
     timestamp: Date? = nil

@@ -120,19 +120,19 @@ extension Event {
   /// Log this event to supply the referral details of a re-engagement campaign.
   /// Note: you must supply at least one of the required parameters source, medium or campaign.
   public static func campaignDetails(
-    source: String?,
-    medium: String?,
-    campaign: String?,
-    term: String? = nil,
-    adNetworkClickId: String? = nil,
-    campaignId: String? = nil,
-    campaignContent: String? = nil,
-    campaignCutomData: String? = nil,
-    creativeFormat: String? = nil,
-    marketingTactic: String? = nil,
-    sourcePlatform: String? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    source: String,
+    medium: String,
+    campaign: String,
+    term: String,
+    adNetworkClickId: String,
+    campaignId: String,
+    campaignContent: String,
+    campaignCustomData: String,
+    creativeFormat: String,
+    marketingTactic: String,
+    sourcePlatform: String,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -146,12 +146,12 @@ extension Event {
         "ad_network_click_id": adNetworkClickId,
         "campaign_id": campaignId,
         "campaign_content": campaignContent,
-        "campaign_custom_data": campaignCutomData,
+        "campaign_custom_data": campaignCustomData,
         "creative_format": creativeFormat,
         "marketing_tactic": marketingTactic,
         "source_platform": sourcePlatform,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
