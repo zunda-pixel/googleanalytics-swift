@@ -205,7 +205,7 @@ extension Event {
   /// This event signifies that an item was added to a wishlist.
   /// Use this event to identify popular gift items.
   /// ```swift
-  /// try await analytics.addToWithlist(
+  /// try await analytics.addToWishlist(
   ///   items: [
   ///     .init(id: "SKU_123", name: "T-Shirt", category: "Apparel", price: .init(currency: .usd, value: 29.99), quantity: 1),
   ///     .init(id: "SKU_234", name: "Socks", category: "Apparel", price: .init(currency: .usd, value: 9.99) quantity: 2)
@@ -213,7 +213,7 @@ extension Event {
   ///   price: Price(currency: .usd, value: 39.98)
   /// )
   /// ```
-  public static func addToWithlist(
+  public static func addToWishlist(
     items: [Item],
     price: Price? = nil,
     sessionId: String,

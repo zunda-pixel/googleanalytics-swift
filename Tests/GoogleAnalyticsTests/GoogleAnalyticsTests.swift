@@ -295,7 +295,7 @@ struct GoogleAnalyticsTests {
         engagementTime: 100,
         timestamp: .now
       ),
-      Event.addToWithlist(
+      Event.addToWishlist(
         items: [.beer(quantiry: 10)],
         price: Price(currency: .jpy, value: 100),
         sessionId: sessionId,
