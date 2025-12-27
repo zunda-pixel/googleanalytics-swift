@@ -9,7 +9,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   public var baseUrl: URL = URL(string: "https://www.google-analytics.com/")!
   public var appId: String
   public var apiSecret: String
-  public var appInstanceId: String
+  public var id: ID
   public var measurementId: String?
   public var userId: String?
   public var userProperties: UserProperties?
@@ -25,7 +25,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     baseUrl: URL = URL(string: "https://www.google-analytics.com/")!,
     appId: String,
     apiSecret: String,
-    appInstanceId: String,
+    id: ID,
     measurementId: String?,
     userId: String?,
     userData: UserData?,
@@ -40,7 +40,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     self.appId = appId
     self.apiSecret = apiSecret
     self.measurementId = measurementId
-    self.appInstanceId = appInstanceId
+    self.id = id
     self.userId = userId
     self.userProperties = nil
     self.userData = userData
@@ -61,7 +61,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     for events: [Event]
   ) async throws {
     let payload = Payload(
-      appInstanceId: appInstanceId,
+      id: id,
       userId: userId,
       timestamp: .now,
       userProperties: userProperties,
@@ -111,7 +111,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     for events: [Event]
   ) async throws -> [ValidationResponse.Message] {
     let payload = Payload(
-      appInstanceId: appInstanceId,
+      id: id,
       userId: userId,
       timestamp: .now,
       userProperties: userProperties,
@@ -171,7 +171,7 @@ public struct ValidationResponse: Decodable {
   }
 
   public struct Message: Decodable {
-    public var fieldPath: String
+    public var fieldPath: String?
     public var description: String
     public var validationCode: String
   }
