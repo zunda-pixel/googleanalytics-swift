@@ -11,6 +11,7 @@ struct GoogleAnalyticsTests {
     apiSecret: ProcessInfo.processInfo.environment["API_SECRET"]!,
     appInstanceId: ProcessInfo.processInfo.environment["APP_INSTANCE_ID"]!,
     measurementId: ProcessInfo.processInfo.environment["MEASTUREMENT_ID"],
+    clientId: UUID().uuidString,
     userId: "555666777888",
     userData: UserData(
       emailAddress: ["test@example.com"],
