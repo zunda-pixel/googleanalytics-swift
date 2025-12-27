@@ -8,8 +8,8 @@ public struct ViewPromotionParameters: Encodable {
   public var creativeName: String?
   public var creativeSlot: String?
   public var items: [Item]
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case id = "promotion_id"
@@ -28,9 +28,9 @@ public struct ViewPromotionParameters: Encodable {
     try container.encodeIfPresent(creativeName, forKey: .creativeName)
     try container.encodeIfPresent(creativeSlot, forKey: .creativeSlot)
     try container.encode(items, forKey: .items)
-    try container.encodeIfPresent(sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }
@@ -47,8 +47,8 @@ extension Event {
     creativeName: String? = nil,
     creativeSlot: String? = nil,
     items: [Item],
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -70,8 +70,8 @@ extension Event {
 @MemberwiseInit(.public)
 public struct GenerateLeadParameters: Encodable {
   public var price: Price?
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case currency
@@ -84,9 +84,9 @@ public struct GenerateLeadParameters: Encodable {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(price?.value, forKey: .value)
-    try container.encodeIfPresent(sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }
@@ -98,8 +98,8 @@ extension Event {
   /// Log this event when a lead has been generated in the app to understand the efficacy of your install and re-engagement campaigns.
   public static func generateLead(
     price: Price? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(

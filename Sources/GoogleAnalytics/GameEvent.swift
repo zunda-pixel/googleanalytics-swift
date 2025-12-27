@@ -29,8 +29,8 @@ extension Event {
   public static func levelUp(
     level: UInt,
     character: String? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -51,8 +51,8 @@ extension Event {
   public static func levelEnd(
     levelName: String,
     success: Bool,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -75,8 +75,8 @@ extension Event {
     score: UInt,
     level: UInt? = nil,
     character: String? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -98,8 +98,8 @@ extension Event {
   /// Since achievements generally represent the breadth of a gaming experience, this event can help you understand how many users are experiencing all that your game has to offer.
   public static func unlockAchievement(
     achievementId: String,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -108,7 +108,7 @@ extension Event {
       parameters: [
         "achievement_id": achievementId,
         "session_id": sessionId,
-        "engagement_time_msec": engagementTime.map { $0 * 1_000_000 }?.description,
+        "engagement_time_msec": (engagementTime * 1_000_000).description,
       ]
     )
   }
@@ -117,8 +117,8 @@ extension Event {
   public static func earnVirtualCurrency(
     currencyName: String,
     value: Double,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -140,8 +140,8 @@ extension Event {
     itemName: String,
     currencyName: String,
     value: Double,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -162,8 +162,8 @@ extension Event {
 public struct EarnVirtualCurrencyParameters: Encodable {
   public var currencyName: String
   public var value: Double
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case currencyName = "virtual_currency_name"
@@ -176,9 +176,9 @@ public struct EarnVirtualCurrencyParameters: Encodable {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.currencyName, forKey: .currencyName)
     try container.encode(self.value, forKey: .value)
-    try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }
@@ -189,8 +189,8 @@ public struct SpendVirtualCurrencyParameters: Encodable {
   public var itemName: String
   public var currencyName: String
   public var value: Double
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case itemName = "item_name"
@@ -205,9 +205,9 @@ public struct SpendVirtualCurrencyParameters: Encodable {
     try container.encode(self.itemName, forKey: .itemName)
     try container.encode(self.currencyName, forKey: .currencyName)
     try container.encode(self.value, forKey: .value)
-    try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }
@@ -218,8 +218,8 @@ public struct PostScoreParameters: Encodable {
   public var score: UInt
   public var level: UInt?
   public var character: String?
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case score
@@ -234,9 +234,9 @@ public struct PostScoreParameters: Encodable {
     try container.encode(self.score, forKey: .score)
     try container.encodeIfPresent(self.level, forKey: .level)
     try container.encodeIfPresent(self.character, forKey: .character)
-    try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }
@@ -246,8 +246,8 @@ public struct PostScoreParameters: Encodable {
 public struct LevelUpParametes: Encodable {
   public var level: UInt
   public var character: String?
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case level
@@ -260,9 +260,9 @@ public struct LevelUpParametes: Encodable {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.level, forKey: .level)
     try container.encodeIfPresent(self.character, forKey: .character)
-    try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }
@@ -273,8 +273,8 @@ public struct LevelEndParametes: Encodable {
   public var levelName: String
   public var success: Bool
   /// TODO - should be a int? 0 or 1
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case levelName = "level_name"
@@ -287,9 +287,9 @@ public struct LevelEndParametes: Encodable {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.levelName, forKey: .levelName)
     try container.encode(self.success, forKey: .success)
-    try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }

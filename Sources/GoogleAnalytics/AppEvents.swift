@@ -156,8 +156,8 @@ extension Event {
     items: [Item],
     listId: String? = nil,
     listName: String? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -183,8 +183,8 @@ extension Event {
     creativeName: String? = nil,
     creativeSlot: String? = nil,
     items: [Item],
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -272,8 +272,8 @@ extension Event {
   public static func viewItem(
     items: [Item],
     price: Price? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -295,8 +295,8 @@ extension Event {
     items: [Item],
     listId: String? = nil,
     listName: String? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Event {
     Event(
@@ -358,8 +358,8 @@ extension Event {
 public struct ViewItemParameters: Encodable {
   public var items: [Item]
   public var price: Price?
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case items
@@ -374,9 +374,9 @@ public struct ViewItemParameters: Encodable {
     try container.encode(items, forKey: .items)
     try container.encodeIfPresent(price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(price?.value, forKey: .value)
-    try container.encodeIfPresent(sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTimeMsec
     )
   }
@@ -389,8 +389,8 @@ public struct PromotionParameters: Encodable {
   public var creativeName: String?
   public var creativeSlot: String?
   public var items: [Item]
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case id = "promotion_id"
@@ -409,9 +409,9 @@ public struct PromotionParameters: Encodable {
     try container.encodeIfPresent(creativeName, forKey: .creativeName)
     try container.encodeIfPresent(creativeSlot, forKey: .creativeSlot)
     try container.encode(items, forKey: .items)
-    try container.encodeIfPresent(sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTimeMsec
     )
   }
@@ -422,8 +422,8 @@ public struct ItemListParameters: Encodable {
   public var items: [Item]
   public var listId: String?
   public var listName: String?
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case items
@@ -435,12 +435,12 @@ public struct ItemListParameters: Encodable {
 
   public func encode(to encoder: any Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
-//    try container.encode(items, forKey: .items)
+    try container.encode(items, forKey: .items)
     try container.encodeIfPresent(listId, forKey: .listId)
     try container.encodeIfPresent(listName, forKey: .listName)
-    try container.encodeIfPresent(sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTimeMsec
     )
   }

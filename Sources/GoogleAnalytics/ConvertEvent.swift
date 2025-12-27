@@ -4,8 +4,8 @@ import MemberwiseInit
 @MemberwiseInit
 public struct PriceParameters: Encodable {
   public var price: Price?
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case currency
@@ -18,9 +18,9 @@ public struct PriceParameters: Encodable {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encode(self.price?.value, forKey: .value)
-    try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }
@@ -30,8 +30,8 @@ public struct PriceParameters: Encodable {
 public struct PriceReasonParameters: Encodable {
   public var price: Price
   public var reason: String?
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case currency
@@ -46,9 +46,9 @@ public struct PriceReasonParameters: Encodable {
     try container.encode(self.price.currency.rawValue.uppercased(), forKey: .currency)
     try container.encode(self.price.value, forKey: .value)
     try container.encodeIfPresent(self.reason, forKey: .reason)
-    try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(
+      (self.engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }
@@ -60,8 +60,8 @@ extension Event {
   /// This event measures when a lead has been converted and closed (for example, through a purchase).
   public static func closeConvertLead(
     price: Price,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -81,12 +81,12 @@ extension Event {
   public static func closeUnConvertLead(
     price: Price,
     reason: String? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
-      name: "close_convert_lead",
+      name: "close_unconvert_lead",
       timestamp: timestamp,
       parameters: PriceReasonParameters(
         price: price,
@@ -103,8 +103,8 @@ extension Event {
   public static func disqualifyLead(
     price: Price,
     reason: String? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -124,8 +124,8 @@ extension Event {
   /// This event measures when a user is marked as meeting the criteria to become a qualified lead.
   public static func qualifyLead(
     price: Price? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -145,8 +145,8 @@ extension Event {
   public static func workingLead(
     price: Price,
     leadStatus: String? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -166,8 +166,8 @@ extension Event {
 public struct WorkingLeadParameters: Encodable {
   public var price: Price?
   public var leadStatus: String?
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case currency
@@ -182,9 +182,9 @@ public struct WorkingLeadParameters: Encodable {
     try container.encode(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encode(self.price?.value, forKey: .value)
     try container.encodeIfPresent(self.leadStatus, forKey: .leadStatus)
-    try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(
+      (self.engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }

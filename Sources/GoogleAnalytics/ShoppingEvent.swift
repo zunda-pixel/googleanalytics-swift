@@ -21,8 +21,8 @@ extension Event {
     paymentType: String? = nil,
     price: Price? = nil,
     items: [Item] = [],
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -46,8 +46,8 @@ public struct AddPaymentInfoParameters: Encodable {
   public var paymentType: String?
   public var price: Price?
   public var items: [Item]
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case coupon
@@ -66,9 +66,9 @@ public struct AddPaymentInfoParameters: Encodable {
     try container.encodeIfPresent(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(self.price?.value, forKey: .value)
     try container.encode(self.items, forKey: .items)
-    try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }
@@ -83,8 +83,8 @@ extension Event {
     shippingTier: String? = nil,
     price: Price? = nil,
     items: [Item] = [],
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -108,8 +108,8 @@ public struct AddShippingInfoParameters: Encodable {
   public var shippingTier: String?
   public var price: Price?
   public var items: [Item]
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case coupon
@@ -128,9 +128,9 @@ public struct AddShippingInfoParameters: Encodable {
     try container.encodeIfPresent(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(self.price?.value, forKey: .value)
     try container.encode(self.items, forKey: .items)
-    try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }
@@ -153,8 +153,8 @@ extension Event {
   public static func addToCart(
     items: [Item],
     price: Price? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -174,8 +174,8 @@ extension Event {
 public struct CartItemParameters: Encodable {
   public var items: [Item]
   public var price: Price?
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case items
@@ -190,9 +190,9 @@ public struct CartItemParameters: Encodable {
     try container.encode(self.items, forKey: .items)
     try container.encodeIfPresent(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(self.price?.value, forKey: .value)
-    try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }
@@ -216,8 +216,8 @@ extension Event {
   public static func addToWithlist(
     items: [Item],
     price: Price? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -242,8 +242,8 @@ extension Event {
     items: [Item],
     coupon: String? = nil,
     price: Price? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -264,8 +264,8 @@ public struct BeginCheckoutParameters: Encodable {
   public var items: [Item]
   public var coupon: String?
   public var price: Price?
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case items
@@ -282,9 +282,9 @@ public struct BeginCheckoutParameters: Encodable {
     try container.encodeIfPresent(self.coupon, forKey: .coupon)
     try container.encodeIfPresent(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(self.price?.value, forKey: .value)
-    try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }
@@ -298,8 +298,8 @@ public struct PurchaseParameters: Encodable {
   public var price: Price?
   public var shipping: Double?
   public var items: [Item]
-  public var sessionId: String?
-  public var engagementTime: TimeInterval?
+  public var sessionId: String
+  public var engagementTime: TimeInterval
 
   private enum CodingKeys: String, CodingKey {
     case transactionId = "transaction_id"
@@ -322,9 +322,9 @@ public struct PurchaseParameters: Encodable {
     try container.encodeIfPresent(self.price?.value, forKey: .value)
     try container.encodeIfPresent(self.shipping, forKey: .shipping)
     try container.encode(self.items, forKey: .items)
-    try container.encodeIfPresent(self.sessionId, forKey: .sessionId)
-    try container.encodeIfPresent(
-      self.engagementTime.map { $0 * 1_000_000 }?.description,
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(
+      (engagementTime * 1_000_000).description,
       forKey: .engagementTime
     )
   }
@@ -341,8 +341,8 @@ extension Event {
     price: Price? = nil,
     shipping: Double? = nil,
     items: [Item],
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -371,8 +371,8 @@ extension Event {
     price: Price? = nil,
     shipping: Double? = nil,
     items: [Item]? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -397,8 +397,8 @@ extension Event {
   public static func removeFromCart(
     items: [Item],
     price: Price? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
@@ -420,8 +420,8 @@ extension Event {
   public static func viewCart(
     items: [Item],
     price: Price? = nil,
-    sessionId: String? = nil,
-    engagementTime: TimeInterval? = nil,
+    sessionId: String,
+    engagementTime: TimeInterval,
     timestamp: Date? = nil
   ) -> Self {
     Event(
