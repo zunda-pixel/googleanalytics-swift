@@ -52,18 +52,20 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   }
 
   public func log(
-    for event: Event
+    for event: Event,
+    timestamp: Date? = nil
   ) async throws {
-    try await self.log(for: [event])
+    try await self.log(for: [event], timestamp: timestamp)
   }
 
   public func log(
-    for events: [Event]
+    for events: [Event],
+    timestamp: Date? = nil
   ) async throws {
     let payload = Payload(
       id: id,
       userId: userId,
-      timestamp: .now,
+      timestamp: timestamp,
       userProperties: userProperties,
       userData: userData,
       consent: consent,
@@ -108,12 +110,13 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   }
 
   public func validatePayload(
-    for events: [Event]
+    for events: [Event],
+    timestamp: Date? = nil
   ) async throws -> [ValidationResponse.Message] {
     let payload = Payload(
       id: id,
       userId: userId,
-      timestamp: .now,
+      timestamp: timestamp,
       userProperties: userProperties,
       userData: userData,
       consent: consent,
