@@ -7,10 +7,8 @@ import MemberwiseInit
 public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: Encodable> {
   public var httpClient: HTTPClient
   public var baseUrl: URL = URL(string: "https://www.google-analytics.com/")!
-  public var appId: String
   public var apiSecret: String
   public var id: ID
-  public var measurementId: String?
   public var userId: String?
   public var userProperties: UserProperties?
   public var userData: UserData?
@@ -23,10 +21,8 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   public init(
     httpClient: HTTPClient,
     baseUrl: URL = URL(string: "https://www.google-analytics.com/")!,
-    appId: String,
     apiSecret: String,
     id: ID,
-    measurementId: String?,
     userId: String?,
     userData: UserData?,
     consent: Consent?,
@@ -37,9 +33,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   ) where UserProperties == Never {
     self.httpClient = httpClient
     self.baseUrl = baseUrl
-    self.appId = appId
     self.apiSecret = apiSecret
-    self.measurementId = measurementId
     self.id = id
     self.userId = userId
     self.userProperties = nil
@@ -77,11 +71,11 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
 
     var queries: [URLQueryItem] = [
       .init(name: "api_secret", value: apiSecret),
-      .init(name: "firebase_app_id", value: appId),
     ]
-
-    if let measurementId {
-      queries.append(.init(name: "measurement_id", value: measurementId))
+    
+    switch id {
+    case .firebase(let firebaseAppId, let id): queries.append(.init(name: "firebase_app_id", value: firebaseAppId))
+    case .gtag(let measurementId, _): queries.append(.init(name: "measurement_id", value: measurementId))
     }
 
     let endpoint =
@@ -128,11 +122,11 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
 
     var queries: [URLQueryItem] = [
       .init(name: "api_secret", value: apiSecret),
-      .init(name: "firebase_app_id", value: appId),
     ]
 
-    if let measurementId {
-      queries.append(.init(name: "measurement_id", value: measurementId))
+    switch id {
+    case .firebase(let firebaseAppId, let id): queries.append(.init(name: "firebase_app_id", value: firebaseAppId))
+    case .gtag(let measurementId, _): queries.append(.init(name: "measurement_id", value: measurementId))
     }
 
     let endpoint =

@@ -7,11 +7,8 @@ import Testing
 struct GoogleAnalyticsTests {
   let client = GoogleAnalytics(
     httpClient: .urlSession(.shared),
-    appId: ProcessInfo.processInfo.environment["APP_ID"]!,
     apiSecret: ProcessInfo.processInfo.environment["API_SECRET"]!,
-    id: ProcessInfo.processInfo.environment["APP_INSTANCE_ID"].map { .appInstanceId($0) }
-      ?? .clientId("SampleClientId"),
-    measurementId: ProcessInfo.processInfo.environment["MEASTUREMENT_ID"],
+    id: .firebase(firebaseAppId: ProcessInfo.processInfo.environment["APP_ID"]!, appInstanceId: ProcessInfo.processInfo.environment["APP_INSTANCE_ID"]!),
     userId: "555666777888",
     userData: UserData(
       emailAddress: ["test@example.com"],

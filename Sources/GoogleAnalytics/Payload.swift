@@ -37,9 +37,9 @@ struct Payload: Encodable {
       forKey: .timestamp
     )
     switch id {
-    case .appInstanceId(let appInstanceId):
+    case .firebase(_, let appInstanceId):
       try container.encode(appInstanceId, forKey: .appInstanceId)
-    case .clientId(let clientId):
+    case .gtag(_, let clientId):
       try container.encode(clientId, forKey: .clientId)
     }
     try container.encodeIfPresent(userId, forKey: .userId)
@@ -54,8 +54,8 @@ struct Payload: Encodable {
 }
 
 public enum ID: Hashable, Sendable {
-  case appInstanceId(String)
-  case clientId(String)
+  case firebase(firebaseAppId: String, appInstanceId: String)
+  case gtag( measurementId: String, clientId: String)
 }
 
 public enum ValidationBehavior: String, Sendable, Codable, Hashable {
