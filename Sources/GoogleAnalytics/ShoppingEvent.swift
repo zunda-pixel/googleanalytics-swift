@@ -67,10 +67,7 @@ public struct AddPaymentInfoParameters: Encodable {
     try container.encodeIfPresent(self.price?.value, forKey: .value)
     try container.encode(self.items, forKey: .items)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 
@@ -129,10 +126,7 @@ public struct AddShippingInfoParameters: Encodable {
     try container.encodeIfPresent(self.price?.value, forKey: .value)
     try container.encode(self.items, forKey: .items)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 
@@ -191,10 +185,7 @@ public struct CartItemParameters: Encodable {
     try container.encodeIfPresent(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(self.price?.value, forKey: .value)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 
@@ -283,10 +274,7 @@ public struct BeginCheckoutParameters: Encodable {
     try container.encodeIfPresent(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(self.price?.value, forKey: .value)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 
@@ -323,10 +311,7 @@ public struct PurchaseParameters: Encodable {
     try container.encodeIfPresent(self.shipping, forKey: .shipping)
     try container.encode(self.items, forKey: .items)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 

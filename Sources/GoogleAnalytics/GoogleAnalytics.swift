@@ -70,12 +70,14 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     )
 
     var queries: [URLQueryItem] = [
-      .init(name: "api_secret", value: apiSecret),
+      .init(name: "api_secret", value: apiSecret)
     ]
-    
+
     switch id {
-    case .firebase(let firebaseAppId, let id): queries.append(.init(name: "firebase_app_id", value: firebaseAppId))
-    case .gtag(let measurementId, _): queries.append(.init(name: "measurement_id", value: measurementId))
+    case .firebase(let firebaseAppId, let id):
+      queries.append(.init(name: "firebase_app_id", value: firebaseAppId))
+    case .gtag(let measurementId, _):
+      queries.append(.init(name: "measurement_id", value: measurementId))
     }
 
     let endpoint =
@@ -121,12 +123,14 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     )
 
     var queries: [URLQueryItem] = [
-      .init(name: "api_secret", value: apiSecret),
+      .init(name: "api_secret", value: apiSecret)
     ]
 
     switch id {
-    case .firebase(let firebaseAppId, let id): queries.append(.init(name: "firebase_app_id", value: firebaseAppId))
-    case .gtag(let measurementId, _): queries.append(.init(name: "measurement_id", value: measurementId))
+    case .firebase(let firebaseAppId, let id):
+      queries.append(.init(name: "firebase_app_id", value: firebaseAppId))
+    case .gtag(let measurementId, _):
+      queries.append(.init(name: "measurement_id", value: measurementId))
     }
 
     let endpoint =

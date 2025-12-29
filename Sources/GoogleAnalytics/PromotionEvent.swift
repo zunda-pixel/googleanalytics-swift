@@ -29,10 +29,7 @@ public struct ViewPromotionParameters: Encodable {
     try container.encodeIfPresent(creativeSlot, forKey: .creativeSlot)
     try container.encode(items, forKey: .items)
     try container.encode(sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 
@@ -85,10 +82,7 @@ public struct GenerateLeadParameters: Encodable {
     try container.encodeIfPresent(price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(price?.value, forKey: .value)
     try container.encode(sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 
@@ -138,21 +132,70 @@ extension Event {
     Event(
       name: "campaign_details",
       timestamp: timestamp,
-      parameters: [
-        "source": source,
-        "medium": medium,
-        "campaign": campaign,
-        "term": term,
-        "ad_network_click_id": adNetworkClickId,
-        "campaign_id": campaignId,
-        "campaign_content": campaignContent,
-        "campaign_custom_data": campaignCustomData,
-        "creative_format": creativeFormat,
-        "marketing_tactic": marketingTactic,
-        "source_platform": sourcePlatform,
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: CampaignDetailsParameters(
+        source: source,
+        medium: medium,
+        campaign: campaign,
+        term: term,
+        adNetworkClickId: adNetworkClickId,
+        campaignId: campaignId,
+        campaignContent: campaignContent,
+        campaignCustomData: campaignCustomData,
+        creativeFormat: creativeFormat,
+        marketingTactic: marketingTactic,
+        sourcePlatform: sourcePlatform,
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
+  }
+}
+
+struct CampaignDetailsParameters: Encodable {
+  var source: String
+  var medium: String
+  var campaign: String
+  var term: String
+  var adNetworkClickId: String
+  var campaignId: String
+  var campaignContent: String
+  var campaignCustomData: String
+  var creativeFormat: String
+  var marketingTactic: String
+  var sourcePlatform: String
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  enum CodingKeys: String, CodingKey {
+    case source
+    case medium
+    case campaign
+    case term
+    case adNetworkClickId = "ad_network_click_id"
+    case campaignId = "campaign_id"
+    case campaignContent = "campaign_content"
+    case campaignCustomData = "campaign_custom_data"
+    case creativeFormat = "creative_format"
+    case marketingTactic = "marketing_tactic"
+    case sourcePlatform = "source_platform"
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time_msec"
+  }
+
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.source, forKey: .source)
+    try container.encode(self.medium, forKey: .medium)
+    try container.encode(self.campaign, forKey: .campaign)
+    try container.encode(self.term, forKey: .term)
+    try container.encode(self.adNetworkClickId, forKey: .adNetworkClickId)
+    try container.encode(self.campaignId, forKey: .campaignId)
+    try container.encode(self.campaignContent, forKey: .campaignContent)
+    try container.encode(self.campaignCustomData, forKey: .campaignCustomData)
+    try container.encode(self.creativeFormat, forKey: .creativeFormat)
+    try container.encode(self.marketingTactic, forKey: .marketingTactic)
+    try container.encode(self.sourcePlatform, forKey: .sourcePlatform)
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(self.engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }

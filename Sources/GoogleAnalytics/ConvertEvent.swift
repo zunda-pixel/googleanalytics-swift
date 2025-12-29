@@ -19,10 +19,7 @@ public struct PriceParameters: Encodable {
     try container.encode(self.price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encode(self.price?.value, forKey: .value)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 
@@ -47,10 +44,7 @@ public struct PriceReasonParameters: Encodable {
     try container.encode(self.price.value, forKey: .value)
     try container.encodeIfPresent(self.reason, forKey: .reason)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (self.engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 
@@ -183,9 +177,6 @@ public struct WorkingLeadParameters: Encodable {
     try container.encode(self.price?.value, forKey: .value)
     try container.encodeIfPresent(self.leadStatus, forKey: .leadStatus)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (self.engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }

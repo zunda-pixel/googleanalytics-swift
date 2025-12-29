@@ -55,7 +55,7 @@ struct Payload: Encodable {
 
 public enum ID: Hashable, Sendable {
   case firebase(firebaseAppId: String, appInstanceId: String)
-  case gtag( measurementId: String, clientId: String)
+  case gtag(measurementId: String, clientId: String)
 }
 
 public enum ValidationBehavior: String, Sendable, Codable, Hashable {

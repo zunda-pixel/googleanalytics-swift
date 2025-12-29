@@ -14,14 +14,16 @@ extension Event {
     Event(
       name: "login",
       timestamp: timestamp,
-      parameters: [
-        "method": method,
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: LoginSignUpParameters(
+        method: method,
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
   }
+}
 
+extension Event {
   /// Sign Up event.
   ///
   /// This event indicates that a user has signed up for an account in your app.
@@ -36,14 +38,35 @@ extension Event {
     Event(
       name: "sign_up",
       timestamp: timestamp,
-      parameters: [
-        "method": method,
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: LoginSignUpParameters(
+        method: method,
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
   }
+}
 
+struct LoginSignUpParameters: Encodable {
+  var method: String
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  private enum CodingKeys: String, CodingKey {
+    case method
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time"
+  }
+
+  public func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(method, forKey: .method)
+    try container.encode(sessionId, forKey: .sessionId)
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
+  }
+}
+
+extension Event {
   /// Session Start event.
   public static func sessionStart(
     sessionId: String,
@@ -53,13 +76,31 @@ extension Event {
     Event(
       name: "app_open",
       timestamp: timestamp,
-      parameters: [
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: SessionStartParameters(
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
   }
+}
 
+struct SessionStartParameters: Encodable {
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  private enum CodingKeys: String, CodingKey {
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time"
+  }
+
+  public func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(sessionId, forKey: .sessionId)
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
+  }
+}
+
+extension Event {
   /// App Open event.
   ///
   /// By logging this event when an App becomes active, developers can understand how often users leave and return during the course of a Session.
@@ -72,13 +113,31 @@ extension Event {
     Event(
       name: "app_open",
       timestamp: timestamp,
-      parameters: [
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: AppOpenParameters(
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
   }
+}
 
+struct AppOpenParameters: Encodable {
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  private enum CodingKeys: String, CodingKey {
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time"
+  }
+
+  public func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(sessionId, forKey: .sessionId)
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
+  }
+}
+
+extension Event {
   /// Screen View event.
   ///
   /// This event signifies a screen view.
@@ -94,15 +153,39 @@ extension Event {
     Event(
       name: "screen_view",
       timestamp: timestamp,
-      parameters: [
-        "screen_name": name,
-        "screen_class": className,
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: ScreenViewParameters(
+        name: name,
+        className: className,
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
   }
+}
 
+struct ScreenViewParameters: Encodable {
+  var name: String
+  var className: String
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  enum CodingKeys: String, CodingKey {
+    case screenName = "screen_name"
+    case screenClass = "screen_class"
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time_msec"
+  }
+
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(name, forKey: .screenName)
+    try container.encode(className, forKey: .screenClass)
+    try container.encode(sessionId, forKey: .sessionId)
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
+  }
+}
+
+extension Event {
   /// Search event.
   ///
   /// Apps that support search features can use this event to contextualize search operations by supplying the appropriate, corresponding parameters.
@@ -116,14 +199,35 @@ extension Event {
     Event(
       name: "search",
       timestamp: timestamp,
-      parameters: [
-        "search_term": term,
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: SearchParameters(
+        term: term,
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
   }
+}
 
+struct SearchParameters: Encodable {
+  var term: String
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  private enum CodingKeys: String, CodingKey {
+    case searchTerm = "search_term"
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time_msec"
+  }
+
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(term, forKey: .searchTerm)
+    try container.encode(sessionId, forKey: .sessionId)
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
+  }
+}
+
+extension Event {
   /// Select Content event.
   ///
   /// This general purpose event signifies that a user has selected some content of a certain type in an app.
@@ -138,15 +242,39 @@ extension Event {
     Event(
       name: "select_content",
       timestamp: timestamp,
-      parameters: [
-        "item_id": itemId,
-        "content_type": contentType,
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: SearchContentParamters(
+        itemId: itemId,
+        contentType: contentType,
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
   }
+}
 
+struct SearchContentParamters: Encodable {
+  var itemId: String
+  var contentType: String
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  enum CodingKeys: String, CodingKey {
+    case itemId = "item_id"
+    case contentType = "content_type"
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time_msec"
+  }
+
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.itemId, forKey: .itemId)
+    try container.encode(self.contentType, forKey: .contentType)
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(self.engagementTime * 1_000_000, forKey: .engagementTime)
+  }
+}
+
+extension Event {
   /// Select Item event.
   ///
   /// This event signifies that an item was selected by a user from a list.
@@ -172,7 +300,9 @@ extension Event {
       )
     )
   }
+}
 
+extension Event {
   /// Select promotion event.
   ///
   /// This event signifies that a user has selected a promotion offer.
@@ -201,7 +331,9 @@ extension Event {
       )
     )
   }
+}
 
+extension Event {
   /// Share event.
   ///
   /// Apps with social features can log the Share event to identify the most viral content.
@@ -216,16 +348,43 @@ extension Event {
     Event(
       name: "share",
       timestamp: timestamp,
-      parameters: [
-        "method": method,
-        "item_id": itemId,
-        "content_type": contentType,
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: ShareParameters(
+        method: method,
+        itemId: itemId,
+        contentType: contentType,
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
   }
+}
 
+struct ShareParameters: Encodable {
+  var method: String
+  var itemId: String
+  var contentType: String
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  enum CodingKeys: String, CodingKey {
+    case method
+    case itemId = "item_id"
+    case contentType = "content_type"
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time_msec"
+  }
+
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.method, forKey: .method)
+    try container.encode(self.itemId, forKey: .itemId)
+    try container.encode(self.contentType, forKey: .contentType)
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(self.engagementTime * 1_000_000, forKey: .engagementTime)
+  }
+}
+
+extension Event {
   /// Tutorial Begin event.
   ///
   /// This event signifies the start of the on-boarding process in your app.
@@ -238,13 +397,31 @@ extension Event {
     Event(
       name: "tutorial_begin",
       timestamp: timestamp,
-      parameters: [
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: TutorialBeginParameters(
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
   }
+}
 
+struct TutorialBeginParameters: Encodable {
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  enum CodingKeys: String, CodingKey {
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time_msec"
+  }
+
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(self.engagementTime * 1_000_000, forKey: .engagementTime)
+  }
+}
+
+extension Event {
   /// Tutorial End event.
   ///
   /// Use this event to signify the user's completion of your app's on-boarding process.
@@ -257,13 +434,31 @@ extension Event {
     Event(
       name: "tutorial_complete",
       timestamp: timestamp,
-      parameters: [
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: TutoriaCompleteParameters(
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
   }
+}
 
+struct TutoriaCompleteParameters: Encodable {
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  enum CodingKeys: String, CodingKey {
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time_msec"
+  }
+
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(self.engagementTime * 1_000_000, forKey: .engagementTime)
+  }
+}
+
+extension Event {
   /// View Item event.
   ///
   /// This event signifies that a user has viewed an item.
@@ -287,7 +482,9 @@ extension Event {
       )
     )
   }
+}
 
+extension Event {
   /// View Item List event.
   ///
   /// Log this event when a user sees a list of items or offerings.
@@ -311,7 +508,9 @@ extension Event {
       )
     )
   }
+}
 
+extension Event {
   /// View Search Results event.
   ///
   /// Log this event when the user has been presented with the results of a search.
@@ -324,14 +523,35 @@ extension Event {
     Event(
       name: "view_search_results",
       timestamp: timestamp,
-      parameters: [
-        "search_term": term,
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: ViewSearchResultsParameters(
+        searchTerm: term,
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
   }
+}
 
+struct ViewSearchResultsParameters: Encodable {
+  var searchTerm: String
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  enum CodingKeys: String, CodingKey {
+    case searchTerm = "search_term"
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time_msec"
+  }
+
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.searchTerm, forKey: .searchTerm)
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(self.engagementTime * 1_000_000, forKey: .engagementTime)
+  }
+}
+
+extension Event {
   /// Join Group event.
   ///
   /// Log this event when a user joins a group such as a guild, team or family.
@@ -345,12 +565,31 @@ extension Event {
     Event(
       name: "join_group",
       timestamp: timestamp,
-      parameters: [
-        "group_id": groupId,
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: JoinGroupParameters(
+        groupId: groupId,
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
+  }
+}
+
+struct JoinGroupParameters: Encodable {
+  var groupId: String
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  enum CodingKeys: String, CodingKey {
+    case groupId = "group_id"
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time_msec"
+  }
+
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.groupId, forKey: .groupId)
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(self.engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 
@@ -375,10 +614,7 @@ public struct ViewItemParameters: Encodable {
     try container.encodeIfPresent(price?.currency.rawValue.uppercased(), forKey: .currency)
     try container.encodeIfPresent(price?.value, forKey: .value)
     try container.encode(sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTimeMsec
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTimeMsec)
   }
 }
 
@@ -410,10 +646,7 @@ public struct PromotionParameters: Encodable {
     try container.encodeIfPresent(creativeSlot, forKey: .creativeSlot)
     try container.encode(items, forKey: .items)
     try container.encode(sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTimeMsec
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTimeMsec)
   }
 }
 
@@ -430,7 +663,7 @@ public struct ItemListParameters: Encodable {
     case listId = "item_list_id"
     case listName = "item_list_name"
     case sessionId = "session_id"
-    case engagementTimeMsec = "engagement_time_msec"
+    case engagementTime = "engagement_time_msec"
   }
 
   public func encode(to encoder: any Encoder) throws {
@@ -439,9 +672,6 @@ public struct ItemListParameters: Encodable {
     try container.encodeIfPresent(listId, forKey: .listId)
     try container.encodeIfPresent(listName, forKey: .listName)
     try container.encode(sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTimeMsec
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
