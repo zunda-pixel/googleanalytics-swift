@@ -74,7 +74,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     ]
 
     switch id {
-    case .firebase(let firebaseAppId, let id):
+    case .firebase(let firebaseAppId, _):
       queries.append(.init(name: "firebase_app_id", value: firebaseAppId))
     case .gtag(let measurementId, _):
       queries.append(.init(name: "measurement_id", value: measurementId))
@@ -127,7 +127,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     ]
 
     switch id {
-    case .firebase(let firebaseAppId, let id):
+    case .firebase(let firebaseAppId, _):
       queries.append(.init(name: "firebase_app_id", value: firebaseAppId))
     case .gtag(let measurementId, _):
       queries.append(.init(name: "measurement_id", value: measurementId))
