@@ -8,7 +8,10 @@ struct GoogleAnalyticsTests {
   let client = GoogleAnalytics(
     httpClient: .urlSession(.shared),
     apiSecret: ProcessInfo.processInfo.environment["API_SECRET"]!,
-    id: .firebase(firebaseAppId: ProcessInfo.processInfo.environment["APP_ID"]!, appInstanceId: ProcessInfo.processInfo.environment["APP_INSTANCE_ID"]!),
+    id: .firebase(
+      firebaseAppId: ProcessInfo.processInfo.environment["APP_ID"]!,
+      appInstanceId: ProcessInfo.processInfo.environment["APP_INSTANCE_ID"]!
+    ),
     userId: "555666777888",
     userData: UserData(
       emailAddress: ["test@example.com"],
