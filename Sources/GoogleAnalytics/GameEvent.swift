@@ -14,14 +14,35 @@ extension Event {
     Event(
       name: "level_start",
       timestamp: timestamp,
-      parameters: [
-        "level_name": levelName,
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: LevelStartParameters(
+        levelName: levelName,
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
   }
+}
 
+struct LevelStartParameters: Encodable {
+  var levelName: String
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  private enum CodingKeys: String, CodingKey {
+    case levelName = "level_name"
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time_msec"
+  }
+
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.levelName, forKey: .levelName)
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(self.engagementTime * 1_000_000, forKey: .engagementTime)
+  }
+}
+
+extension Event {
   /// Level Up event.
   ///
   /// This event signifies that a player has leveled up in your gaming app.
@@ -44,7 +65,9 @@ extension Event {
       )
     )
   }
+}
 
+extension Event {
   /// Level End event.
   ///
   /// Log this event when the user finishes a level.
@@ -66,7 +89,9 @@ extension Event {
       )
     )
   }
+}
 
+extension Event {
   /// Post Score event.
   ///
   /// Log this event when the user posts a score in your gaming app.
@@ -91,7 +116,9 @@ extension Event {
       )
     )
   }
+}
 
+extension Event {
   /// Unlock Achievement event.
   ///
   /// Log this event when the user has unlocked an achievement in your game.
@@ -105,14 +132,35 @@ extension Event {
     Event(
       name: "unlock_achievement",
       timestamp: timestamp,
-      parameters: [
-        "achievement_id": achievementId,
-        "session_id": sessionId,
-        "engagement_time_msec": (engagementTime * 1_000_000).description,
-      ]
+      parameters: UnlockAchievementParameters(
+        achievementId: achievementId,
+        sessionId: sessionId,
+        engagementTime: engagementTime
+      )
     )
   }
+}
 
+struct UnlockAchievementParameters: Encodable {
+  var achievementId: String
+  var sessionId: String
+  var engagementTime: TimeInterval
+
+  private enum CodingKeys: String, CodingKey {
+    case achievementId = "achievement_id"
+    case sessionId = "session_id"
+    case engagementTime = "engagement_time_msec"
+  }
+
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(self.achievementId, forKey: .achievementId)
+    try container.encode(self.sessionId, forKey: .sessionId)
+    try container.encode(self.engagementTime * 1_000_000, forKey: .engagementTime)
+  }
+}
+
+extension Event {
   /// Earn Virtual Currency event.
   public static func earnVirtualCurrency(
     currencyName: String,
@@ -132,7 +180,9 @@ extension Event {
       )
     )
   }
+}
 
+extension Event {
   /// Spend Virtual Currency event.
   ///
   /// This event tracks the sale of virtual goods in your app and can help you identify which virtual goods are the most popular objects of purchase.
@@ -177,10 +227,7 @@ public struct EarnVirtualCurrencyParameters: Encodable {
     try container.encode(self.currencyName, forKey: .currencyName)
     try container.encode(self.value, forKey: .value)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 
@@ -206,10 +253,7 @@ public struct SpendVirtualCurrencyParameters: Encodable {
     try container.encode(self.currencyName, forKey: .currencyName)
     try container.encode(self.value, forKey: .value)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 
@@ -235,10 +279,7 @@ public struct PostScoreParameters: Encodable {
     try container.encodeIfPresent(self.level, forKey: .level)
     try container.encodeIfPresent(self.character, forKey: .character)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 
@@ -261,10 +302,7 @@ public struct LevelUpParametes: Encodable {
     try container.encode(self.level, forKey: .level)
     try container.encodeIfPresent(self.character, forKey: .character)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }
 
@@ -288,9 +326,6 @@ public struct LevelEndParametes: Encodable {
     try container.encode(self.levelName, forKey: .levelName)
     try container.encode(self.success, forKey: .success)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }

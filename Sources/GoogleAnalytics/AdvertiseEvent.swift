@@ -61,9 +61,6 @@ public struct AdvertiseEventParameters: Encodable {
     try container.encode(self.price.currency.rawValue.uppercased(), forKey: .currency)
     try container.encode(self.price.value, forKey: .value)
     try container.encode(self.sessionId, forKey: .sessionId)
-    try container.encode(
-      (self.engagementTime * 1_000_000).description,
-      forKey: .engagementTime
-    )
+    try container.encode(self.engagementTime * 1_000_000, forKey: .engagementTime)
   }
 }

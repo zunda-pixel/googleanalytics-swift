@@ -7,10 +7,11 @@ import Testing
 struct GoogleAnalyticsTests {
   let client = GoogleAnalytics(
     httpClient: .urlSession(.shared),
-    appId: ProcessInfo.processInfo.environment["APP_ID"]!,
     apiSecret: ProcessInfo.processInfo.environment["API_SECRET"]!,
-    appInstanceId: ProcessInfo.processInfo.environment["APP_INSTANCE_ID"]!,
-    measurementId: ProcessInfo.processInfo.environment["MEASTUREMENT_ID"],
+    id: .firebase(
+      firebaseAppId: ProcessInfo.processInfo.environment["APP_ID"]!,
+      appInstanceId: ProcessInfo.processInfo.environment["APP_INSTANCE_ID"]!
+    ),
     userId: "555666777888",
     userData: UserData(
       emailAddress: ["test@example.com"],
@@ -53,17 +54,29 @@ struct GoogleAnalyticsTests {
     )
   )
 
+  @Test
+  func validatePayload() async throws {
+    let sessionId = UUID().uuidString
+
+    let messages = try await client.validatePayload(
+      for: allEvents(sessionId: sessionId)
+    )
+
+    #expect(messages.isEmpty)
+    print(messages)
+  }
+
+  @Test
+  func log() async throws {
+    let sessionId = UUID().uuidString
+
+    try await client.log(
+      for: allEvents(sessionId: sessionId)
+    )
+  }
+
   func allEvents(sessionId: String) -> [Event] {
     [
-      Event.adImpression(
-        platform: "macOS",
-        format: "Format",
-        source: "Source",
-        unitName: "UnitName",
-        price: .init(currency: .yer, value: 100),
-        sessionId: sessionId,
-        engagementTime: 10000
-      ),
       Event.adImpression(
         platform: "iOS",
         format: "Format",
@@ -74,18 +87,10 @@ struct GoogleAnalyticsTests {
         engagementTime: 10000,
         timestamp: .now
       ),
-      Event.login(method: "Email", sessionId: sessionId, engagementTime: 10000),
       Event.login(method: "Email", sessionId: sessionId, engagementTime: 10000, timestamp: .now),
       Event.signUp(method: "Email", sessionId: sessionId, engagementTime: 10000),
-      Event.sessionStart(sessionId: sessionId, engagementTime: 100000),
       Event.sessionStart(sessionId: sessionId, engagementTime: 100000, timestamp: .now),
-      Event.appOpen(sessionId: sessionId, engagementTime: 10000),
-      Event.screenView(
-        name: "ScreenName",
-        className: "ClassName",
-        sessionId: sessionId,
-        engagementTime: 10000
-      ),
+      Event.appOpen(sessionId: sessionId, engagementTime: 10000, timestamp: .now),
       Event.screenView(
         name: "ScreenName",
         className: "ClassName",
@@ -93,27 +98,13 @@ struct GoogleAnalyticsTests {
         engagementTime: 10000,
         timestamp: .now
       ),
-      Event.search(term: "Term", sessionId: sessionId, engagementTime: 10000),
       Event.search(term: "Term", sessionId: sessionId, engagementTime: 10000, timestamp: .now),
       Event.selectContent(
         itemId: "ItemId",
         contentType: "Book",
         sessionId: sessionId,
-        engagementTime: 10000
-      ),
-      Event.selectContent(
-        itemId: "ItemId",
-        contentType: "Book",
-        sessionId: sessionId,
         engagementTime: 10000,
         timestamp: .now
-      ),
-      Event.share(
-        method: "Native",
-        itemId: "ItemId",
-        contentType: "ContentType",
-        sessionId: sessionId,
-        engagementTime: 1
       ),
       Event.share(
         method: "Native",
@@ -123,20 +114,15 @@ struct GoogleAnalyticsTests {
         engagementTime: 1,
         timestamp: .now
       ),
-      Event.tutorialBegin(sessionId: sessionId, engagementTime: 10),
       Event.tutorialBegin(sessionId: sessionId, engagementTime: 10, timestamp: .now),
-      Event.tutorialComplete(sessionId: sessionId, engagementTime: 100),
       Event.tutorialComplete(sessionId: sessionId, engagementTime: 100, timestamp: .now),
-      Event.viewSearchResults(term: "Term", sessionId: sessionId, engagementTime: 100),
       Event.viewSearchResults(
         term: "Term",
         sessionId: sessionId,
         engagementTime: 100,
         timestamp: .now
       ),
-      Event.joinGroup(id: "GroupID", sessionId: sessionId, engagementTime: 100),
       Event.joinGroup(id: "GroupID", sessionId: sessionId, engagementTime: 100, timestamp: .now),
-      Event.levelStart(levelName: "LevelName", sessionId: sessionId, engagementTime: 100),
       Event.levelStart(
         levelName: "LevelName",
         sessionId: sessionId,
@@ -146,28 +132,8 @@ struct GoogleAnalyticsTests {
       Event.unlockAchievement(
         achievementId: "AchivementId",
         sessionId: sessionId,
-        engagementTime: 100
-      ),
-      Event.unlockAchievement(
-        achievementId: "AchivementId",
-        sessionId: sessionId,
         engagementTime: 100,
         timestamp: .now
-      ),
-      Event.campaignDetails(
-        source: "Source",
-        medium: "Medium",
-        campaign: "Campaign",
-        term: "Term",
-        adNetworkClickId: "AdNetworkClickId",
-        campaignId: "CampaignId",
-        campaignContent: "CampaignContent",
-        campaignCustomData: "CampaignCustomData",
-        creativeFormat: "CreativeFormat",
-        marketingTactic: "MarketingTactic",
-        sourcePlatform: "SourcePlatform",
-        sessionId: sessionId,
-        engagementTime: 100
       ),
       Event.campaignDetails(
         source: "Source",
@@ -293,11 +259,7 @@ struct GoogleAnalyticsTests {
         name: "PromotionName",
         creativeName: "CreativeName",
         creativeSlot: "CreativeSlot",
-        items: [
-          .beer(
-            quantiry: 10
-          )
-        ],
+        items: [.beer(quantiry: 10)],
         sessionId: sessionId,
         engagementTime: 100,
         timestamp: .now
@@ -333,7 +295,7 @@ struct GoogleAnalyticsTests {
         engagementTime: 100,
         timestamp: .now
       ),
-      Event.addToWithlist(
+      Event.addToWishlist(
         items: [.beer(quantiry: 10)],
         price: Price(currency: .jpy, value: 100),
         sessionId: sessionId,
@@ -385,27 +347,6 @@ struct GoogleAnalyticsTests {
         timestamp: .now
       ),
     ]
-  }
-
-  @Test
-  func validatePayload() async throws {
-    let sessionId = UUID().uuidString
-
-    let messages = try await client.validatePayload(
-      for: allEvents(sessionId: sessionId)
-    )
-
-    #expect(messages.isEmpty)
-    print(messages)
-  }
-
-  @Test
-  func log() async throws {
-    let sessionId = UUID().uuidString
-
-    try await client.log(
-      for: allEvents(sessionId: sessionId)
-    )
   }
 }
 

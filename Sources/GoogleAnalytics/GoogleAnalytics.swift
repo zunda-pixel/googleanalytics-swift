@@ -7,10 +7,8 @@ import MemberwiseInit
 public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: Encodable> {
   public var httpClient: HTTPClient
   public var baseUrl: URL = URL(string: "https://www.google-analytics.com/")!
-  public var appId: String
   public var apiSecret: String
-  public var appInstanceId: String
-  public var measurementId: String?
+  public var id: ID
   public var userId: String?
   public var userProperties: UserProperties?
   public var userData: UserData?
@@ -23,10 +21,8 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   public init(
     httpClient: HTTPClient,
     baseUrl: URL = URL(string: "https://www.google-analytics.com/")!,
-    appId: String,
     apiSecret: String,
-    appInstanceId: String,
-    measurementId: String?,
+    id: ID,
     userId: String?,
     userData: UserData?,
     consent: Consent?,
@@ -37,10 +33,8 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   ) where UserProperties == Never {
     self.httpClient = httpClient
     self.baseUrl = baseUrl
-    self.appId = appId
     self.apiSecret = apiSecret
-    self.measurementId = measurementId
-    self.appInstanceId = appInstanceId
+    self.id = id
     self.userId = userId
     self.userProperties = nil
     self.userData = userData
@@ -52,18 +46,20 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   }
 
   public func log(
-    for event: Event
+    for event: Event,
+    timestamp: Date? = nil
   ) async throws {
-    try await self.log(for: [event])
+    try await self.log(for: [event], timestamp: timestamp)
   }
 
   public func log(
-    for events: [Event]
+    for events: [Event],
+    timestamp: Date? = nil
   ) async throws {
     let payload = Payload(
-      appInstanceId: appInstanceId,
+      id: id,
       userId: userId,
-      timestamp: .now,
+      timestamp: timestamp,
       userProperties: userProperties,
       userData: userData,
       consent: consent,
@@ -74,11 +70,13 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     )
 
     var queries: [URLQueryItem] = [
-      .init(name: "api_secret", value: apiSecret),
-      .init(name: "firebase_app_id", value: appId),
+      .init(name: "api_secret", value: apiSecret)
     ]
 
-    if let measurementId {
+    switch id {
+    case .firebase(let firebaseAppId, _):
+      queries.append(.init(name: "firebase_app_id", value: firebaseAppId))
+    case .gtag(let measurementId, _):
       queries.append(.init(name: "measurement_id", value: measurementId))
     }
 
@@ -108,12 +106,13 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   }
 
   public func validatePayload(
-    for events: [Event]
+    for events: [Event],
+    timestamp: Date? = nil
   ) async throws -> [ValidationResponse.Message] {
     let payload = Payload(
-      appInstanceId: appInstanceId,
+      id: id,
       userId: userId,
-      timestamp: .now,
+      timestamp: timestamp,
       userProperties: userProperties,
       userData: userData,
       consent: consent,
@@ -124,11 +123,13 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     )
 
     var queries: [URLQueryItem] = [
-      .init(name: "api_secret", value: apiSecret),
-      .init(name: "firebase_app_id", value: appId),
+      .init(name: "api_secret", value: apiSecret)
     ]
 
-    if let measurementId {
+    switch id {
+    case .firebase(let firebaseAppId, _):
+      queries.append(.init(name: "firebase_app_id", value: firebaseAppId))
+    case .gtag(let measurementId, _):
       queries.append(.init(name: "measurement_id", value: measurementId))
     }
 
@@ -171,7 +172,7 @@ public struct ValidationResponse: Decodable {
   }
 
   public struct Message: Decodable {
-    public var fieldPath: String
+    public var fieldPath: String?
     public var description: String
     public var validationCode: String
   }
