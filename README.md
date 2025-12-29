@@ -8,16 +8,16 @@
 ```swift
 let client = GoogleAnalytics(
   httpClient: .urlSession(.shared),
-  appId: "1:211175559289:ios:121555f3c816aecc3cd5d8"
   apiSecret: "bCab-SdfDBi2L3ZPaYHYfw",
-  appInstanceId: "3999FC57C7891233AE27F5A98F8CB7D5"
-)
-
-try await client.log(
-  for: Event(
-    name: "login",
-    timestamp: .now,
-    parameters: ["method": "Google"]
+  id: .firebase(
+    firebaseAppId: "1:211175559289:ios:121555f3c816aecc3cd5d8",
+    appInstanceId: "3999FC57C7891233AE27F5A98F8CB7D5"
   )
 )
+
+try await client.log(for: .login(
+  method: "Email",
+  sessionId: "123",
+  engagementTime: 123
+))
 ```
