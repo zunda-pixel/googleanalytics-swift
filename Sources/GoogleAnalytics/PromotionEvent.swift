@@ -18,7 +18,7 @@ public struct ViewPromotionParameters: Encodable {
     case creativeSlot = "creative_slot"
     case items
     case sessionId = "session_id"
-    case engagementTime = "engagement_time"
+    case engagementTime = "engagement_time_msec"
   }
 
   public func encode(to encoder: any Encoder) throws {

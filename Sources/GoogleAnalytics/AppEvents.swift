@@ -55,7 +55,7 @@ struct LoginSignUpParameters: Encodable {
   private enum CodingKeys: String, CodingKey {
     case method
     case sessionId = "session_id"
-    case engagementTime = "engagement_time"
+    case engagementTime = "engagement_time_msec"
   }
 
   public func encode(to encoder: any Encoder) throws {
@@ -90,7 +90,7 @@ struct SessionStartParameters: Encodable {
 
   private enum CodingKeys: String, CodingKey {
     case sessionId = "session_id"
-    case engagementTime = "engagement_time"
+    case engagementTime = "engagement_time_msec"
   }
 
   public func encode(to encoder: any Encoder) throws {
@@ -127,7 +127,7 @@ struct AppOpenParameters: Encodable {
 
   private enum CodingKeys: String, CodingKey {
     case sessionId = "session_id"
-    case engagementTime = "engagement_time"
+    case engagementTime = "engagement_time_msec"
   }
 
   public func encode(to encoder: any Encoder) throws {
