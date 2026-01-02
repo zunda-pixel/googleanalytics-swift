@@ -67,40 +67,6 @@ struct LoginSignUpParameters: Encodable {
 }
 
 extension Event {
-  /// Session Start event.
-  public static func sessionStart(
-    sessionId: String,
-    engagementTime: TimeInterval,
-    timestamp: Date? = nil
-  ) -> Self {
-    Event(
-      name: "app_open",
-      timestamp: timestamp,
-      parameters: SessionStartParameters(
-        sessionId: sessionId,
-        engagementTime: engagementTime
-      )
-    )
-  }
-}
-
-struct SessionStartParameters: Encodable {
-  var sessionId: String
-  var engagementTime: TimeInterval
-
-  private enum CodingKeys: String, CodingKey {
-    case sessionId = "session_id"
-    case engagementTime = "engagement_time_msec"
-  }
-
-  public func encode(to encoder: any Encoder) throws {
-    var container = encoder.container(keyedBy: CodingKeys.self)
-    try container.encode(sessionId, forKey: .sessionId)
-    try container.encode(engagementTime * 1_000_000, forKey: .engagementTime)
-  }
-}
-
-extension Event {
   /// App Open event.
   ///
   /// By logging this event when an App becomes active, developers can understand how often users leave and return during the course of a Session.

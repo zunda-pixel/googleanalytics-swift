@@ -89,7 +89,6 @@ struct GoogleAnalyticsTests {
       ),
       Event.login(method: "Email", sessionId: sessionId, engagementTime: 10000, timestamp: .now),
       Event.signUp(method: "Email", sessionId: sessionId, engagementTime: 10000),
-      Event.sessionStart(sessionId: sessionId, engagementTime: 100000, timestamp: .now),
       Event.appOpen(sessionId: sessionId, engagementTime: 10000, timestamp: .now),
       Event.screenView(
         name: "ScreenName",
