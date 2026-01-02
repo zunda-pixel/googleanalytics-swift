@@ -11,13 +11,15 @@ let client = GoogleAnalytics(
   apiSecret: "bCab-SdfDBi2L3ZPaYHYfw",
   id: .firebase(
     firebaseAppId: "1:211175559289:ios:121555f3c816aecc3cd5d8",
-    appInstanceId: "3999FC57C7891233AE27F5A98F8CB7D5"
+    appInstanceId: UUID().uuidString.replacingOccurrences(of: "-", with: "")
   )
 )
 
-try await client.log(for: .login(
+let sessionId = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+
+try await client.send(for: .login(
   method: "Email",
-  sessionId: "123",
+  sessionId: sessionId,
   engagementTime: 123
 ))
 ```

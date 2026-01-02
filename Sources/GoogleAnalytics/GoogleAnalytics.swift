@@ -45,14 +45,18 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
     self.validationBehavior = validationBehavior
   }
 
-  public func log(
+  public func send(
     for event: Event,
     timestamp: Date? = nil
   ) async throws {
-    try await self.log(for: [event], timestamp: timestamp)
+    try await self.send(for: [event], timestamp: timestamp)
   }
 
-  public func log(
+  /// Send events
+  /// - Parameters:
+  ///   - events: Up to 25 events
+  ///   - timestamp: timestamp
+  public func send(
     for events: [Event],
     timestamp: Date? = nil
   ) async throws {
