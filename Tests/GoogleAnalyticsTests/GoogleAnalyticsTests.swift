@@ -70,7 +70,7 @@ struct GoogleAnalyticsTests {
   func log() async throws {
     let sessionId = UUID().uuidString
 
-    try await client.log(
+    try await client.send(
       for: allEvents(sessionId: sessionId)
     )
   }
