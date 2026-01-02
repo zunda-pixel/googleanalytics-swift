@@ -79,18 +79,33 @@ struct GoogleAnalyticsTests {
   @Test
   func reservedEventNamesButNoError() async throws {
     let eventNames = [
-      "firebase_campaign",
-      "app_store_refund",
       "ad_reward",
       "app_exception",
-      "dynamic_link_app_open",
       "notification_send",
+      "app_store_refund",
+      "app_store_subscription_cancel",
+      "app_store_subscription_convert",
+      "app_store_subscription_renew",
+      "dynamic_link_app_open",
       "dynamic_link_first_open",
-      "firebase_in_app_message_dismiss",
-      "app_upgrade",
-      "firebase_in_app_message_action",
       "dynamic_link_app_update",
+      "firebase_campaign",
+      "firebase_in_app_message_dismiss",
+      "firebase_in_app_message_action",
       "firebase_in_app_message_impression",
+      "app_upgrade",
+      "page_view",
+      "scroll",
+      "video_complete",
+      "video_progress",
+      "video_start",
+      "form_submit",
+      "form_start",
+      "file_download",
+      "click",
+      "fiam_action",
+      "fiam_dismiss",
+      "fiam_impression",
     ]
     let errors = try await client.validatePayload(
       for: eventNames.map { Event(name: $0, timestamp: nil, parameters: [String: String]()) }
@@ -121,6 +136,7 @@ struct GoogleAnalyticsTests {
       "ad_activeview",
       "error",
       "notification_open",
+      "in_app_purchase",
     ]
 
     try await withThrowingTaskGroup { group in
