@@ -51,7 +51,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
   ) async throws {
     try await self.send(for: [event], timestamp: timestamp)
   }
-  
+
   /// Send events
   /// - Parameters:
   ///   - events: Up to 25 events
