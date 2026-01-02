@@ -171,7 +171,7 @@ public struct ValidationResponse: Decodable {
     case message = "validationMessages"
   }
 
-  public struct Message: Decodable {
+  public struct Message: Decodable, Hashable, Sendable {
     public var fieldPath: String?
     public var description: String
     public var validationCode: String

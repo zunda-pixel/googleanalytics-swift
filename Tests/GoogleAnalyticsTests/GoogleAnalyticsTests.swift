@@ -75,6 +75,76 @@ struct GoogleAnalyticsTests {
     )
   }
 
+  /// https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference?client_type=firebase#reserved_names
+  @Test
+  func reservedEventNamesButNoError() async throws {
+    let eventNames = [
+      "firebase_campaign",
+      "app_store_refund",
+      "ad_reward",
+      "app_exception",
+      "dynamic_link_app_open",
+      "notification_send",
+      "dynamic_link_first_open",
+      "firebase_in_app_message_dismiss",
+      "app_upgrade",
+      "firebase_in_app_message_action",
+      "dynamic_link_app_update",
+      "firebase_in_app_message_impression",
+    ]
+    let errors = try await client.validatePayload(
+      for: eventNames.map { Event(name: $0, timestamp: nil, parameters: [String: String]()) }
+    )
+    #expect(errors.isEmpty)
+  }
+
+  /// https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference?client_type=firebase#reserved_names
+  @Test
+  func reservedEventNames() async throws {
+    let eventNames = [
+      "app_install",
+      "user_engagement",
+      "ad_query",
+      "adunit_exposure",
+      "app_clear_data",
+      "app_update",
+      "session_start",
+      "ad_exposure",
+      "os_update",
+      "notification_receive",
+      "ad_click",
+      "notification_foreground",
+      "notification_dismiss",
+      "first_open",
+      "app_remove",
+      "first_visit",
+      "ad_activeview",
+      "error",
+      "notification_open",
+    ]
+
+    try await withThrowingTaskGroup { group in
+      for eventName in eventNames {
+        group.addTask {
+          let errors = try await client.validatePayload(
+            for: [Event(name: eventName, timestamp: nil, parameters: [String: String]())]
+          )
+          return (eventName, errors)
+        }
+      }
+
+      for try await event in group {
+        let errorMessage = ValidationResponse.Message(
+          fieldPath: "events",
+          description: "Event at index: [0] has name [\(event.0)] which is reserved.",
+          validationCode: "NAME_RESERVED"
+        )
+
+        #expect(event.1 == [errorMessage])
+      }
+    }
+  }
+
   func allEvents(sessionId: String) -> [Event] {
     [
       Event.adImpression(
