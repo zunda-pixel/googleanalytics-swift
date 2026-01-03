@@ -10,7 +10,7 @@ struct GoogleAnalyticsTests {
     apiSecret: ProcessInfo.processInfo.environment["API_SECRET"]!,
     id: .firebase(
       firebaseAppId: ProcessInfo.processInfo.environment["APP_ID"]!,
-      appInstanceId: ProcessInfo.processInfo.environment["APP_INSTANCE_ID"]!
+      appInstanceId: UUID().uuidString.replacingOccurrences(of: "-", with: "")
     ),
     userId: "555666777888",
     userData: UserData(
@@ -56,7 +56,7 @@ struct GoogleAnalyticsTests {
 
   @Test
   func validatePayload() async throws {
-    let sessionId = UUID().uuidString
+    let sessionId = UUID().uuidString.replacingOccurrences(of: "-", with: "")
 
     let messages = try await client.validatePayload(
       for: allEvents(sessionId: sessionId)
@@ -68,7 +68,7 @@ struct GoogleAnalyticsTests {
 
   @Test
   func log() async throws {
-    let sessionId = UUID().uuidString
+    let sessionId = UUID().uuidString.replacingOccurrences(of: "-", with: "")
 
     try await client.send(
       for: allEvents(sessionId: sessionId)
