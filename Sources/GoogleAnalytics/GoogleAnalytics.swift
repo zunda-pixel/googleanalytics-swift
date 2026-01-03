@@ -123,6 +123,7 @@ public struct GoogleAnalytics<HTTPClient: HTTPClientProtocol, UserProperties: En
       userLocation: userLocation,
       ipOverride: ipOverride,
       device: device,
+      validationBehavior: .enforceRecommendations,
       events: events
     )
 
