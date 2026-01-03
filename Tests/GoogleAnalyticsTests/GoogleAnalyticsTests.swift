@@ -431,6 +431,188 @@ struct GoogleAnalyticsTests {
         engagementTime: 100,
         timestamp: .now
       ),
+      // Automatically collected events
+      Event.adReward(
+        adUnitId: "AdUnitId",
+        rewardType: "Coins",
+        rewardValue: 100,
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.appException(
+        fatal: false,
+        timestamp: .now
+      ),
+      Event.notificationSend(
+        messageId: "MessageId",
+        messageName: "MessageName",
+        messageTime: .now,
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.appStoreRefund(
+        productId: "ProductId",
+        quantity: 1,
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.appStoreSubscriptionCancel(
+        productId: "ProductId",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.appStoreSubscriptionConvert(
+        productId: "ProductId",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.appStoreSubscriptionRenew(
+        productId: "ProductId",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.dynamicLinkAppOpen(
+        linkUrl: "https://example.com",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.dynamicLinkFirstOpen(
+        linkUrl: "https://example.com",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.dynamicLinkAppUpdate(
+        linkUrl: "https://example.com",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.firebaseCampaign(
+        source: "Source",
+        medium: "Medium",
+        campaign: "Campaign",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.firebaseInAppMessageDismiss(
+        messageId: "MessageId",
+        messageName: "MessageName",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.firebaseInAppMessageAction(
+        messageId: "MessageId",
+        messageName: "MessageName",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.firebaseInAppMessageImpression(
+        messageId: "MessageId",
+        messageName: "MessageName",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.appUpgrade(
+        previousAppVersion: "1.0.0",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.pageView(
+        pageLocation: "https://example.com",
+        pageTitle: "Example Page",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.scroll(
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.videoComplete(
+        videoTitle: "Video Title",
+        videoUrl: "https://example.com/video",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.videoProgress(
+        videoTitle: "Video Title",
+        videoUrl: "https://example.com/video",
+        videoPercent: 50,
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.videoStart(
+        videoTitle: "Video Title",
+        videoUrl: "https://example.com/video",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.formSubmit(
+        formId: "FormId",
+        formName: "FormName",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.formStart(
+        formId: "FormId",
+        formName: "FormName",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.fileDownload(
+        fileName: "file.pdf",
+        linkUrl: "https://example.com/file.pdf",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.click(
+        linkUrl: "https://example.com",
+        linkText: "Click here",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.fiamAction(
+        messageId: "MessageId",
+        messageName: "MessageName",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.fiamDismiss(
+        messageId: "MessageId",
+        messageName: "MessageName",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
+      Event.fiamImpression(
+        messageId: "MessageId",
+        messageName: "MessageName",
+        sessionId: sessionId,
+        engagementTime: 100,
+        timestamp: .now
+      ),
     ]
   }
 }
