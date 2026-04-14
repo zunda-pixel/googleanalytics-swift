@@ -106,6 +106,7 @@ struct GoogleAnalyticsTests {
       "fiam_action",
       "fiam_dismiss",
       "fiam_impression",
+      "in_app_purchase",
     ]
     let errors = try await client.validatePayload(
       for: eventNames.map { Event(name: $0, timestamp: nil, parameters: [String: String]()) }
@@ -136,7 +137,6 @@ struct GoogleAnalyticsTests {
       "ad_activeview",
       "error",
       "notification_open",
-      "in_app_purchase",
     ]
 
     try await withThrowingTaskGroup { group in
