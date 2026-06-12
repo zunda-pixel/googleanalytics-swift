@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swift-standards/swift-iso-3166.git",
       "state" : {
-        "revision" : "e521592a10e1bf549fce56c4a77b11b532bba1ce",
-        "version" : "0.2.3"
+        "revision" : "41e1ff76592764d7c0cfcdce6e3937d33995fb1d",
+        "version" : "0.2.4"
       }
     },
     {
