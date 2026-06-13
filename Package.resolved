@@ -150,8 +150,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swift-standards/swift-iso-639.git",
       "state" : {
-        "revision" : "8e783ad8b09cfc289f1bc362a0e61af8b383038f",
-        "version" : "0.2.3"
+        "revision" : "ecab4b9cf0911a3faf7330b904bc33515a7f411f",
+        "version" : "0.2.4"
       }
     },
     {
